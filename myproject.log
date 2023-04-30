@@ -1,0 +1,146 @@
+16:52:57,650  INFO main class:show:139 - Открытие экранной формы
+16:53:04,648  INFO AWT-EventQueue-0 class:show:139 - Открытие экранной формы
+14:54:03,727  INFO main class:show:139 - Открытие главного окна
+14:54:06,400  INFO AWT-EventQueue-0 class:actionPerformed:145 - Нажатие кнопки +
+14:54:06,452  INFO AWT-EventQueue-0 class:actionPerformed:149 - Открытие окна добавления
+14:54:07,215  INFO AWT-EventQueue-0 class:show:139 - Открытие главного окна
+14:54:07,970  INFO AWT-EventQueue-0 class:actionPerformed:157 - Нажатие кнопки поиска
+14:54:08,059  INFO AWT-EventQueue-0 class:actionPerformed:160 - Открытие окна поиска
+14:54:09,639  INFO AWT-EventQueue-0 class:show:139 - Открытие главного окна
+14:54:11,311  INFO AWT-EventQueue-0 class:actionPerformed:287 - Нажатие кнопки для предоставления пдф отчета
+14:54:11,510  INFO AWT-EventQueue-0 class:actionPerformed:321 - Пдф отчет готов
+14:54:13,892  INFO AWT-EventQueue-0 class:actionPerformed:169 - Нажатие кнопки сохранения в файл
+14:54:14,053  INFO AWT-EventQueue-0 class:actionPerformed:218 - Данные успешно сохранены в файл
+14:54:14,835  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+14:54:14,861  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+14:54:15,598  INFO AWT-EventQueue-0 class:actionPerformed:169 - Нажатие кнопки сохранения в файл
+14:54:15,602  INFO AWT-EventQueue-0 class:actionPerformed:218 - Данные успешно сохранены в файл
+15:38:48,126  INFO main class:show:139 - Открытие главного окна
+15:38:50,464  INFO AWT-EventQueue-0 class:actionPerformed:145 - Нажатие кнопки +
+15:38:50,523  INFO AWT-EventQueue-0 class:actionPerformed:149 - Открытие окна добавления
+15:38:51,155  INFO AWT-EventQueue-0 class:show:139 - Открытие главного окна
+15:38:52,445  INFO AWT-EventQueue-0 class:actionPerformed:287 - Нажатие кнопки для предоставления пдф отчета
+15:38:52,612  INFO AWT-EventQueue-0 class:actionPerformed:321 - Пдф отчет готов
+13:48:48,398  INFO main class:show:139 - Открытие главного окна
+13:50:16,111  INFO AWT-EventQueue-0 class:actionPerformed:145 - Нажатие кнопки +
+13:50:16,212  INFO AWT-EventQueue-0 class:actionPerformed:149 - Открытие окна добавления
+13:50:17,865  INFO AWT-EventQueue-0 class:show:139 - Открытие главного окна
+13:50:19,166  INFO AWT-EventQueue-0 class:actionPerformed:157 - Нажатие кнопки поиска
+13:50:19,252  INFO AWT-EventQueue-0 class:actionPerformed:160 - Открытие окна поиска
+13:50:20,738  INFO AWT-EventQueue-0 class:show:139 - Открытие главного окна
+13:50:21,532  INFO AWT-EventQueue-0 class:actionPerformed:157 - Нажатие кнопки поиска
+13:50:21,559  INFO AWT-EventQueue-0 class:actionPerformed:160 - Открытие окна поиска
+13:50:23,101  INFO AWT-EventQueue-0 class:show:139 - Открытие главного окна
+13:50:24,909  INFO AWT-EventQueue-0 class:actionPerformed:287 - Нажатие кнопки для предоставления пдф отчета
+13:50:25,110  INFO AWT-EventQueue-0 class:actionPerformed:321 - Пдф отчет готов
+13:50:26,864  INFO AWT-EventQueue-0 class:actionPerformed:169 - Нажатие кнопки сохранения в файл
+13:50:27,021  INFO AWT-EventQueue-0 class:actionPerformed:218 - Данные успешно сохранены в файл
+13:50:27,529  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+13:50:27,548  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+13:50:28,781  INFO AWT-EventQueue-0 class:actionPerformed:169 - Нажатие кнопки сохранения в файл
+13:50:28,790  INFO AWT-EventQueue-0 class:actionPerformed:218 - Данные успешно сохранены в файл
+10:52:21,789  INFO main class:show:139 - Открытие главного окна
+10:53:16,008  INFO AWT-EventQueue-0 class:actionPerformed:157 - Нажатие кнопки поиска
+10:53:16,098  INFO AWT-EventQueue-0 class:actionPerformed:160 - Открытие окна поиска
+10:53:18,439  INFO AWT-EventQueue-0 class:show:139 - Открытие главного окна
+10:53:19,634  INFO AWT-EventQueue-0 class:actionPerformed:145 - Нажатие кнопки +
+10:53:19,655  INFO AWT-EventQueue-0 class:actionPerformed:149 - Открытие окна добавления
+10:53:20,672  INFO AWT-EventQueue-0 class:show:139 - Открытие главного окна
+10:53:21,745  INFO AWT-EventQueue-0 class:actionPerformed:287 - Нажатие кнопки для предоставления пдф отчета
+10:53:21,947  INFO AWT-EventQueue-0 class:actionPerformed:321 - Пдф отчет готов
+10:53:32,710  INFO AWT-EventQueue-0 class:actionPerformed:169 - Нажатие кнопки сохранения в файл
+10:53:32,829  INFO AWT-EventQueue-0 class:actionPerformed:218 - Данные успешно сохранены в файл
+10:53:33,412  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:33,433  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:36,164  INFO AWT-EventQueue-0 class:actionPerformed:169 - Нажатие кнопки сохранения в файл
+10:53:36,172  INFO AWT-EventQueue-0 class:actionPerformed:218 - Данные успешно сохранены в файл
+10:53:36,792  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:36,796  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:37,319  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:37,323  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:37,475  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:37,479  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:37,619  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:37,623  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:37,761  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:37,764  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:37,896  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:37,897  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:38,075  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:38,079  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:38,213  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:38,216  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:38,352  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:38,355  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:38,489  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:38,492  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:38,645  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:38,648  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:38,808  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:38,811  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:38,988  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:38,992  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:39,123  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:39,124  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:39,265  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:39,269  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:39,421  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:39,423  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:39,563  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:39,564  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:39,724  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:39,727  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:39,879  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:39,882  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:40,038  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:40,042  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:40,175  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:40,177  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:40,327  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:40,329  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:40,484  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:40,485  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:40,647  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:40,650  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:40,802  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:40,806  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:40,966  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:40,969  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:41,145  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:41,148  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:41,306  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:41,309  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:41,477  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:41,480  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:41,638  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:41,640  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:41,780  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:41,783  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:41,940  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:41,943  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:42,094  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:42,097  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:42,260  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:42,262  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:42,418  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:42,420  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:42,559  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:42,562  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:42,718  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:53:42,722  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:53:43,235  INFO AWT-EventQueue-0 class:actionPerformed:169 - Нажатие кнопки сохранения в файл
+10:53:43,249  INFO AWT-EventQueue-0 class:actionPerformed:218 - Данные успешно сохранены в файл
+10:53:46,765  INFO AWT-EventQueue-0 class:actionPerformed:287 - Нажатие кнопки для предоставления пдф отчета
+10:53:46,845  INFO AWT-EventQueue-0 class:actionPerformed:321 - Пдф отчет готов
+10:54:21,674  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:54:21,683  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:54:21,807  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:54:21,810  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:54:21,938  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:54:21,941  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:54:22,091  INFO AWT-EventQueue-0 class:actionPerformed:234 - Нажание кнопки загрузки данных
+10:54:22,093  INFO AWT-EventQueue-0 class:actionPerformed:280 - Данные успешно загружены
+10:54:26,305  INFO AWT-EventQueue-0 class:actionPerformed:169 - Нажатие кнопки сохранения в файл
+10:54:26,318  INFO AWT-EventQueue-0 class:actionPerformed:218 - Данные успешно сохранены в файл
+10:54:26,955  INFO AWT-EventQueue-0 class:actionPerformed:287 - Нажатие кнопки для предоставления пдф отчета
+10:54:26,995  INFO AWT-EventQueue-0 class:actionPerformed:321 - Пдф отчет готов
