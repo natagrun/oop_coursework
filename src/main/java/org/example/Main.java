@@ -14,7 +14,7 @@ public class Main {
 
         em.getTransaction().begin();//открываем транзакцию - гарантируем целостность данных -
 
-        Doctor d = new Doctor("Grey", "Smot", 43, "234343", "Psychologist", 39, "Sunday, Monday", "13:00-16:00");
+//        Doctor d = new Doctor("Grey", "Smot", 43, "234343", "Psychologist", 39, "Sunday, Monday", "13:00-16:00");
 //        Disease dis = new Disease("Schizophrenia", 0);
 //        Patient p = new Patient("Melman", "Dobl", 23, "294585765", 1);
 //        Patient h = new Patient("Felicia", "Narrow", 19, "876543456", 2);
@@ -23,18 +23,19 @@ public class Main {
 //        p.add_disease(dis);
 //        h.add_disease(dis);
 
-//        Doctor f = em.find(Doctor.class,2);
+        Person f = em.find(Person.class, 2);
+        System.out.println(f.Age);
+        f.setAge(45);
+
 //        f.add_patient(h);
 //        f.add_patient(p);
 
-        em.persist(d);
+//        em.persist(d);
 //        em.persist(dis);
 //        em.persist(p);
 //        em.persist(h);
 
         em.getTransaction().commit();
-
-        System.out.println("New person is " + d.getName());
 
 
     }

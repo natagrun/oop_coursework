@@ -1,22 +1,19 @@
 package org.example;
 
-import  java.util.Random;
-import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.Image;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.parser.Path;
-import org.w3c.dom.*;
+//import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.StyleConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -30,15 +27,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.Stream;
-
-
-import org.apache.log4j.Logger;
-
-import static com.sun.xml.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 
 
 //класс создания главного окна
@@ -72,7 +63,7 @@ public class MainWindow {
 
 
 
-    private static final Logger log = Logger.getLogger("MainWindow.class");
+//    private static final Logger log = Logger.getLogger("MainWindow.class");
 
 
     private ArrayList<JButton> buttons = new ArrayList<JButton>();
@@ -136,17 +127,17 @@ public class MainWindow {
 
 
 
-        log.info("Открытие главного окна");
+//        log.info("Открытие главного окна");
 
 
         // слушатель кнопки для открытия окна добавления
         new_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                log.info("Нажатие кнопки +");
+//                log.info("Нажатие кнопки +");
 
                 AddWindow a = new AddWindow();
                 a.show();
-                log.info("Открытие окна добавления");
+//                log.info("Открытие окна добавления");
                 hospital.setVisible(false);
             }
         });
@@ -154,10 +145,10 @@ public class MainWindow {
         // слушатель кнопки для открытия окна поиска
         search_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                log.info("Нажатие кнопки поиска");
+//                log.info("Нажатие кнопки поиска");
                 SearchWindow a = new SearchWindow();
                 a.show();
-                log.info("Открытие окна поиска");
+//                log.info("Открытие окна поиска");
                 hospital.setVisible(false);
 
             }
@@ -166,7 +157,7 @@ public class MainWindow {
         // слушатель кнопки для открытия окна поиска
         save_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                log.info("Нажатие кнопки сохранения в файл");
+//                log.info("Нажатие кнопки сохранения в файл");
                 try {
                     DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
                     Document doc = builder.newDocument();
@@ -204,20 +195,20 @@ public class MainWindow {
                         trans.transform(new DOMSource(doc), new StreamResult(fw));
 
                     } catch (TransformerConfigurationException e) {
-                        log.warn("Ошибка сохранения данных");
+//                        log.warn("Ошибка сохранения данных");
                         e.printStackTrace();
                     } catch (TransformerException e) {
-                        log.warn("Ошибка сохранения данных");
+//                        log.warn("Ошибка сохранения данных");
                         e.printStackTrace();
                     } catch (IOException e) {
-                        log.warn("Ошибка сохранения данных");
+//                        log.warn("Ошибка сохранения данных");
                         e.printStackTrace();
                     }
 
 
-                    log.info("Данные успешно сохранены в файл");
+//                    log.info("Данные успешно сохранены в файл");
                 } catch (ParserConfigurationException e) {
-                    log.warn("Ошибка сохранения данных");
+//                    log.warn("Ошибка сохранения данных");
                     e.printStackTrace();
                 }
 
@@ -231,7 +222,7 @@ public class MainWindow {
         upload_button.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
-                log.info("Нажание кнопки загрузки данных");
+//                log.info("Нажание кнопки загрузки данных");
                 Document doc = null;
                 try {
 
@@ -244,10 +235,10 @@ public class MainWindow {
                     e.printStackTrace();
                 } // Обработка ошибки парсера при чтении данных из XML-файла
                 catch (SAXException e) {
-                    log.warn("Ошибка загрузки данных");
+//                    log.warn("Ошибка загрузки данных");
                     e.printStackTrace();
                 } catch (IOException e) {
-                    log.warn("Ошибка загрузки данных");
+//                    log.warn("Ошибка загрузки данных");
                     e.printStackTrace();
                 }
                 NodeList dlBooks = doc.getElementsByTagName("doctors");
@@ -277,14 +268,14 @@ public class MainWindow {
                     modelp.addRow(new String[]{Name, Last_Name, Age, Phone, BloodType});
                 }
 
-                log.info("Данные успешно загружены");
+//                log.info("Данные успешно загружены");
             }
         });
 
 
         stat_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                log.info("Нажатие кнопки для предоставления пдф отчета");
+//                log.info("Нажатие кнопки для предоставления пдф отчета");
 
                 com.itextpdf.text.Document document = new com.itextpdf.text.Document();
 
@@ -318,7 +309,7 @@ public class MainWindow {
                     document.add(parag);
                     document.add(tabled);
                     document.add(tablep);
-                    log.info("Пдф отчет готов");
+//                    log.info("Пдф отчет готов");
 
                 } catch (DocumentException e) {
                     throw new RuntimeException(e);
