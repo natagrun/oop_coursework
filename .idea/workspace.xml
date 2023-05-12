@@ -4,28 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a08f9e5-e874-478b-bf00-b7225ca21dad" name="Changes" comment="Starting changing windows">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/AddingWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/SortToolBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/oop_coursework.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    <list default="true" id="3a08f9e5-e874-478b-bf00-b7225ca21dad" name="Changes" comment="added new windows">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/AddObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/CardBox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Certificate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/CertificateWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/EditWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/LetterInNumber.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/books.xml" beforeDir="false" afterPath="$PROJECT_DIR$/books.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iTextHelloWorld.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/iTextHelloWorld.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/AddingWindow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Disease.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Disease.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/NewMainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/NewMainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/arial.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/arial.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/MainWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/MainWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Person.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/org/example/AddWindowTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/org/example/SearchWindowTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/persistence.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/log4j.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/AddWindow.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Disease.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Doctor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Hospital.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/MainWindow.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/MyException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Patient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Person.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/SearchWindow.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,14 +51,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
-}</component>
-  <component name="RunManager" selected="Application.Main">
+}]]></component>
+  <component name="RunManager" selected="Application.NewMainWindow">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="oop_coursework" />
@@ -86,8 +96,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.NewMainWindow" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -100,6 +110,11 @@
       <option name="presentableId" value="Default" />
       <updated>1682845530736</updated>
       <workItem from="1682845535734" duration="22815000" />
+      <workItem from="1683361011392" duration="7577000" />
+      <workItem from="1683368702589" duration="12888000" />
+      <workItem from="1683391832458" duration="138000" />
+      <workItem from="1683391989468" duration="24357000" />
+      <workItem from="1683532630653" duration="7987000" />
     </task>
     <task id="LOCAL-00001" summary="Starting changing windows">
       <created>1682847324216</created>
@@ -108,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682847324216</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added new windows">
+      <created>1683361131931</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1683361131931</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,6 +149,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Starting changing windows" />
-    <option name="LAST_COMMIT_MESSAGE" value="Starting changing windows" />
+    <MESSAGE value="added new windows" />
+    <option name="LAST_COMMIT_MESSAGE" value="added new windows" />
   </component>
 </project>

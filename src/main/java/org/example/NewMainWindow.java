@@ -1,39 +1,43 @@
 package org.example;
 
-import org.hibernate.Session;
-
-import javax.persistence.Query;
+import javax.persistence.*;
+import javax.print.Doc;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.text.ParseException;
+import java.util.*;
+import java.util.List;
 
 public class NewMainWindow {
     private final JFrame MainWindow = new JFrame("CourseWork");
-
-    private final AddingWindow addWindow = new AddingWindow(this);
-//    private final AddWindow AddWindow = new AddWindow();
-//    private final EditWindow EditWindow = new AddWindow();
-//    private final SaveWindow SaveWindow = new AddWindow();
-
-
-    //    private final ArrayList<JButton> toolBarButtons = new ArrayList<>(Arrays.asList(newButton, statisticsButton, certificateButton, saveButton, uploadButton));
     private final ArrayList<JButton> toolBarButtons = new ArrayList<JButton>();
+    private final JTabbedPane tabsFolder = new JTabbedPane(JTabbedPane.LEFT);
 
     private JToolBar toolBar;
 
     public void SetVisible(boolean flag) {
         MainWindow.setVisible(flag);
+        updateTables();
     }
 
-    private void toolBarInit() {
+    public void openEditWin(int data,int code){
+        this.updateTables();
+        EditWindow editWindow = new EditWindow(this,data);
+        editWindow.setEditWindowDoc(code);
+        editWindow.SetVisible(true);
+
+    }
+
+    private void toolBarInit() throws ParseException {
+        AddObject n = new AddObject(this);
+        n.setAddWindow();
+
+        CertificateWindow c = new CertificateWindow();
+        c.setCertifWin();
 
         toolBar = new JToolBar("Панель");
         toolBar.setFloatable(false);
@@ -43,8 +47,7 @@ public class NewMainWindow {
         toolBarButtons.add(newButton);
 
         newButton.addActionListener(event -> {
-            addWindow.show();
-            MainWindow.setVisible(false);
+            n.setVisible(true);
         });
 
         JButton statisticsButton = new JButton(new ImageIcon("/Users/natalagrunskaa/Downloads/stat.png"));
@@ -54,6 +57,10 @@ public class NewMainWindow {
         JButton certificateButton = new JButton(new ImageIcon("/Users/natalagrunskaa/Downloads/sertif.png"));
         certificateButton.setToolTipText("Создать справку");
         toolBarButtons.add(certificateButton);
+        certificateButton.addActionListener(event -> {
+            c.SetVisible(true);
+        });
+
 
         JButton saveButton = new JButton(new ImageIcon("/Users/natalagrunskaa/Downloads/save.png"));
         saveButton.setToolTipText("хз не помню о чем я думала кода я создавала эту кнопку");
@@ -70,164 +77,146 @@ public class NewMainWindow {
 
     }
 
-    private void fillDoctorBox(JPanel box) {
-        String test = "test";
 
-        box.setLayout(new GridLayout(6, 1, 0, 0));
-
-        JLabel name = new JLabel();
-        name.setText("   NAME AND SURNAME");
-        name.setFont(new Font("Dialog", Font.PLAIN, 16));
-
-        JLabel specialization = new JLabel();
-        specialization.setText("   Specialization: " + test);
-        JLabel age = new JLabel();
-        age.setText("   Age: " + test);
-        JLabel workDays = new JLabel();
-        workDays.setText("   Work Days: " + test);
-        JLabel workTime = new JLabel();
-        workTime.setText("   Work Time: " + test);
-
-        JPanel buttonPanel = new JPanel();
+    private JPanel tabInit(String[][] data) {
+        JPanel mainPanel = new JPanel();
+        String[] columns;
+        if (data[0].length == 3) {
+            columns = new String[]{"id", "Name", "Last Name", "Age", "Phone number", "Blood type"};
+        } else {
+            columns = new String[]{"id", "Name", "Last Name", " Specialization", "Age", "Phone number", "Work Days", "Work time", "Cabinet"};
+        }
+        String[] newArray = Arrays.copyOfRange(columns, 0, columns.length/2);
+        DefaultTableModel model = new DefaultTableModel(data, newArray);
 
 
-        JButton editButton = new JButton("Edit");
-        editButton.setToolTipText("Edit card");
-        buttonPanel.add(editButton);
 
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.setToolTipText("Delete card");
-        buttonPanel.add(deleteButton);
+        JTable mainTable = new JTable(model);
+        mainTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        box.add(name);
-        box.add(specialization);
-        box.add(age);
-        box.add(workDays);
-        box.add(workTime);
-        box.add(buttonPanel);
-        box.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+        ListSelectionModel selModel = mainTable.getSelectionModel();
+        CardBox cardBox = new CardBox(columns,this);
 
+        selModel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                cardBox.data = null;
+                cardBox.updateCard();
+
+                int[] selectedRows = mainTable.getSelectedRows();
+                int selIndex = selectedRows[0];
+                TableModel model = mainTable.getModel();
+                Object value = model.getValueAt(selIndex, 0);
+
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("test_persistence");
+                EntityManager em = emf.createEntityManager();
+                em.getTransaction().begin();
+                Doctor doctor = em.find(Doctor.class, Integer.parseInt(value.toString()));
+                String[] dataSelect;
+                if (doctor == null) {
+                    Patient patient = em.find(Patient.class, Integer.parseInt(value.toString()));
+                    dataSelect = new String[5];
+                    dataSelect[0] = String.valueOf(patient.getId());
+                    dataSelect[1] = patient.getName() + " " + patient.getLastName();
+                    dataSelect[2] = String.valueOf(patient.getAge());
+                    dataSelect[3] = patient.getPhoneNumber();
+                    dataSelect[4] = String.valueOf(patient.getBloodType());
+                } else {
+                    dataSelect = new String[8];
+                    dataSelect[0] = String.valueOf(doctor.getId());
+                    dataSelect[1] = doctor.getName() + " " + doctor.getLastName();
+                    dataSelect[2] = doctor.getSpecialization();
+                    dataSelect[3] = String.valueOf(doctor.getAge());
+                    dataSelect[4] = doctor.getPhoneNumber();
+                    dataSelect[5] = doctor.getWork_days();
+                    dataSelect[6] = doctor.getWork_time();
+                    dataSelect[7] = String.valueOf(doctor.getCabinet());
+                }
+                em.getTransaction().commit();
+                cardBox.data = dataSelect;
+                cardBox.updateCard();
+
+            }
+
+        });
+
+        mainTable.setAutoCreateRowSorter(false);
+//        sortToolBar.func(mainTable);
+        JScrollPane scrolld = new JScrollPane(mainTable);
+        mainPanel.setLayout(new
+
+                BorderLayout());
+
+//        mainPanel.add(sortToolBar, BorderLayout.NORTH);
+        mainPanel.add(scrolld, BorderLayout.CENTER);
+        mainPanel.add(cardBox, BorderLayout.EAST);
+        return mainPanel;
     }
 
-    private void fillPatientsBox(JPanel box, DefaultTableModel b) {
-        String test = "test";
 
-        box.setLayout(new GridLayout(b.getColumnCount() + 2, 1, 0, 0));
-        JLabel name = new JLabel();
-        name.setText("   NAME AND SURNAME");
-        name.setFont(new Font("Dialog", Font.PLAIN, 16));
+    public void updateTables() {
 
-        JLabel age = new JLabel();
-        age.setText("   Age: " + test);
+        ArrayList<String[]> dataDoctors = new ArrayList<>();
+        ArrayList<String[]> dataPatients = new ArrayList<>();
 
-        JLabel bloodType = new JLabel();
-        bloodType.setText("   Blood Type: " + test);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("test_persistence");
 
-        JLabel diseases = new JLabel();
-        diseases.setText("   Diseases: " + test);
+        EntityManager em = emf.createEntityManager();
 
-        JPanel buttonPanel = new JPanel();
+        System.out.println("Start test!");
 
+        em.getTransaction().begin();
+        Query queryd = em.createNativeQuery("SELECT * FROM Person where bd_type ='D'", Doctor.class);
+        List<Doctor> listd = queryd.getResultList();
+        for (Doctor doctor : listd) {
+            String[] oneD = new String[4];
+            oneD[0] = String.valueOf(doctor.getId());
+            oneD[1] = doctor.getName();
+            oneD[2] = doctor.getLastName();
+            oneD[3] =  doctor.getSpecialization();
+            dataDoctors.add(oneD);
+        }
 
-        JButton editButton = new JButton("Edit");
-        editButton.setToolTipText("Edit card");
-        buttonPanel.add(editButton);
+        Query queryp = em.createNativeQuery("SELECT * FROM Person where bd_type ='P'", Patient.class);
+        List<Patient> listp = queryp.getResultList();
+        for (Patient patient : listp) {
+            String[] oneP = new String[3];
+            oneP[0] = String.valueOf(patient.getId());
+            oneP[1] = patient.getName();
+            oneP[2] = patient.getLastName();
 
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.setToolTipText("Delete card");
-        buttonPanel.add(deleteButton);
+            System.out.println(Arrays.toString(oneP));
+            dataPatients.add(oneP);
+        }
 
-        JButton writeButton = new JButton("Assign");
-        writeButton.setToolTipText("Assign to doctor");
-        buttonPanel.add(writeButton);
+        em.getTransaction().commit();
 
-        JButton certificateButton = new JButton("Make certificate");
-        certificateButton.setToolTipText("Make certificate");
-
-
-        box.add(name);
-        box.add(age);
-        box.add(bloodType);
-        box.add(diseases);
-        box.add(buttonPanel);
-        box.add(certificateButton);
-        box.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+        tabsFolder.removeAll();
+        MainWindow.add(tabsFolder, BorderLayout.CENTER);
+        tabsFolder.addTab("Doctors", new ImageIcon("/Users/natalagrunskaa/Downloads/doctor.png"), tabInit(ArrLsttoStr(dataDoctors)), "Открыть таблицу докторов");
+        tabsFolder.addTab("Patients", new ImageIcon("/Users/natalagrunskaa/Downloads/doctor.png"), tabInit(ArrLsttoStr(dataPatients)), "Открыть таблицу patients");
     }
 
-//    private String[][] fillTables() {
-//
-//    }
+    private String[][] ArrLsttoStr(ArrayList<String[]> n) {
+        String[][] ans = new String[n.size()][n.get(0).length];
+        for (int i = 0; i < ans.length; i++) {
+            ans[i] = n.get(i);
+        }
+        return ans;
+    }
 
-    public void show() {
+    public void show() throws ParseException {
+
         MainWindow.setSize(1080, 720);
         MainWindow.setLocation(150, 100);
         MainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         MainWindow.setVisible(true);
         MainWindow.setLayout(new BorderLayout());
-
         toolBarInit();
         MainWindow.add(toolBar, BorderLayout.NORTH);
-
-        JTabbedPane tabsFolder = new JTabbedPane(JTabbedPane.LEFT);
-        MainWindow.add(tabsFolder, BorderLayout.CENTER);
-
-        JPanel doctorsPanel = new JPanel();
-        JPanel doctorsBox = new JPanel();
-
-        SortToolBar sortToolBarD = new SortToolBar();
-
-
-        String[] columnsd = {"Name", "Last Name", "Age", "Phone number", " Specialization", "Work Days", "Work time", "Cabinet"};
-        String[][] datad = {{"Vlass", "Vozmitel", "19", "9583646583", " Heartbreaker", "Monday, Saturday", "9:50-17:20", "1381"},
-                {"Alex", "Markush", "18", "3948573355", " Suspends smth", "Monday, Friday", "15:30-17:00", "1304"},
-                {"Max", "Fastest", "19", "574389458", " Krag", "Wednesday", "13:30-18:00", "4578"},
-                {"Mishk", "pigeon", "21", "2934866", " mmm boy", "Friday", "7:30-19:00", "1307"}};
-//        DefaultTableModel modeld = new DefaultTableModel(fillTables(), columnsd);
-        DefaultTableModel modeld = new DefaultTableModel(datad, columnsd);
-        JTable doctors = new JTable(modeld);
-        doctors.setAutoCreateRowSorter(true);
-        sortToolBarD.func(doctors);
-
-        JScrollPane scrolld = new JScrollPane(doctors);
-        doctorsPanel.setLayout(new BorderLayout());
-        fillDoctorBox(doctorsBox);
-        doctorsPanel.add(sortToolBarD, BorderLayout.NORTH);
-        doctorsPanel.add(scrolld, BorderLayout.CENTER);
-        doctorsBox.setPreferredSize(new Dimension(300, 500));
-        doctorsPanel.add(doctorsBox, BorderLayout.EAST);
-        tabsFolder.addTab("Доктора", new ImageIcon("/Users/natalagrunskaa/Downloads/doctor.png"), doctorsPanel, "Открыть таблицу докторов");
-
-
-        JPanel patientsPanel = new JPanel();
-        JPanel patientsBox = new JPanel();
-
-        SortToolBar sortToolBarP = new SortToolBar();
-
-
-        String[] columnsp = {"Имя", "Фамилия", "Возраст", "Номер телефона", "Группа крови"};
-        String[][] datap = {{"Vlass", "Vozmitel", "19", "9583646583", " 1"},
-                {"Alex", "Markush", "18", "3948573355", " 2"}};
-
-        DefaultTableModel modelp = new DefaultTableModel(datap, columnsp);
-
-
-        JTable patients = new JTable(modelp);
-        sortToolBarP.func(patients);
-        patients.setAutoCreateRowSorter(true);
-
-        JScrollPane scrollp = new JScrollPane(patients);
-        patientsPanel.setLayout(new BorderLayout());
-        fillPatientsBox(patientsBox, modelp);
-        patientsPanel.add(sortToolBarP, BorderLayout.NORTH);
-        patientsPanel.add(scrollp, BorderLayout.CENTER);
-        patientsBox.setPreferredSize(new Dimension(300, 500));
-        patientsPanel.add(patientsBox, BorderLayout.EAST);
-        tabsFolder.addTab("patients", new ImageIcon("/Users/natalagrunskaa/Downloads/doctor.png"), patientsPanel, "Открыть таблицу patients");
-
-
+        updateTables();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         NewMainWindow n = new NewMainWindow();
         n.show();
     }

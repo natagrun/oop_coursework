@@ -23,9 +23,8 @@ public class Disease {
         this.id = id;
     }
 
-    public Disease(String name, int count) {
+    public Disease(String name) {
         Name = name;
-        this.count = count;
     }
 
     public Disease() {
