@@ -51,7 +51,7 @@ public class CertificateWindow {
         }
 
         if (code == 3) {
-            em.getTransaction().begin();
+            if(!em.getTransaction().isActive()) em.getTransaction().begin();
             Query queryd = em.createNativeQuery("SELECT * FROM Disease", Disease.class);
             List<Disease> list = queryd.getResultList();
             String[] l = new String[list.size()];

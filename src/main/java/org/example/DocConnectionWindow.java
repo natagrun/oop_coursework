@@ -9,7 +9,7 @@ import static org.example.NewMainWindow.em;
 
 public class DocConnectionWindow {
 
-    private final JFrame docConnectWin = new JFrame("Patient appointment");
+    public final JFrame docConnectWin = new JFrame("Patient appointment");
     private final Doctor doctor;
     private final NewMainWindow mainWindow;
     private final JPanel tableandtext = new JPanel();
@@ -64,18 +64,12 @@ public class DocConnectionWindow {
             Object value = model1.getValueAt(selIndex, 0);
             if(!em.getTransaction().isActive()) em.getTransaction().begin();
             selectedPatient = em.find(Patient.class, Integer.parseInt(value.toString()));
-
+            System.out.println(selectedPatient.toString());
         });
-
-
-
 
         JScrollPane scroll = new JScrollPane(mainTable);
         tableandtext.add(scroll);
-
         return tableandtext;
-
-
     }
 
     public void setWin() {
@@ -98,11 +92,8 @@ public class DocConnectionWindow {
                 queryd2.setParameter(2, selectedPatient.id);
                 queryd2.executeUpdate();
                 em.getTransaction().commit();
-                docConnectWin.remove(fillPatients());
                 docConnectWin.add(fillPatients(), BorderLayout.CENTER);
             }catch (IndexOutOfBoundsException ignored){}
-
-
         });
 
         JButton exitbutton = new JButton("Exit");

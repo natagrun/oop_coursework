@@ -59,7 +59,7 @@ public class ConnewctionButSEcond {
         });
         confirmButton.addActionListener(event -> {
             String u = comboBoxNotSetted.getSelectedItem().toString();
-            em.getTransaction().begin();
+            if(!em.getTransaction().isActive()) em.getTransaction().begin();
             disease = em.find(Disease.class, kostya.get(Arrays.asList(l).indexOf(u)));
             Query query = em.createNativeQuery("SELECT * FROM patient_to_disease where disease_id =?1 and patient_id =?2");
             query.setParameter(1, disease.getId());
@@ -67,29 +67,29 @@ public class ConnewctionButSEcond {
             List liss = query.getResultList();
             if (liss.size() == 0) {
                 patient.add_disease(disease);
-
                 em.merge(patient);
 
             }
             em.getTransaction().commit();
-            this.patientConnectionWindow.fillPatients();
+            patientConnectionWindow.fillPatients();
         });
         deleteButton.addActionListener(event -> {
             String u = comboBoxNotSetted.getSelectedItem().toString();
-            em.getTransaction().begin();
+            if(!em.getTransaction().isActive()) em.getTransaction().begin();
             disease = em.find(Disease.class, kostya.get(Arrays.asList(l).indexOf(u)));
             Query queryd2 = em.createNativeQuery("DELETE FROM patient_to_disease where disease_id =?1 and patient_id =?2");
             queryd2.setParameter(1, disease.getId());
             queryd2.setParameter(2, patient.id);
             queryd2.executeUpdate();
-            this.patientConnectionWindow.fillPatients();
+            disease.setCount(disease.getCount()-1);
 
             em.getTransaction().commit();
+            patientConnectionWindow.fillPatients();
         });
         docToPat.add(exitButton);
         docToPat.add(confirmButton);
         docToPat.add(deleteButton);
-
+        patientConnectionWindow.fillPatients();
         connectWindow.add(docToPat);
         connectWindow.setVisible(true);
 }

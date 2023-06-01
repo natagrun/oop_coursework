@@ -147,7 +147,6 @@ public class CardBox extends JPanel {
                 }
 
                 em.getTransaction().commit();
-                newMainWindow.updateTables();
             } catch (NullPointerException n) {
                 System.out.println();
             }

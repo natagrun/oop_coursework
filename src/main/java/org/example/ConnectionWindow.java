@@ -55,11 +55,9 @@ public class ConnectionWindow {
             docToPat.add(comboBoxNotSetted);
             final String[] u = new String[1];
 
-            ActionListener actionListener = new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    JComboBox box = (JComboBox) e.getSource();
-                    u[0] = (String) box.getSelectedItem();
-                }
+            ActionListener actionListener = e -> {
+                JComboBox box = (JComboBox) e.getSource();
+                u[0] = (String) box.getSelectedItem();
             };
             comboBoxNotSetted.addActionListener(actionListener);
             JButton exitButton = new JButton("Exit");
@@ -69,10 +67,10 @@ public class ConnectionWindow {
                 this.SetVisible(false);
                 docConnectionWindow.SetVisible(true);
             });
+            JComboBox finalComboBoxNotSetted = comboBoxNotSetted;
             confirmButton.addActionListener(event -> {
-                if (!em.getTransaction().isActive()) {
-                    em.getTransaction().begin();
-                }
+                if(!em.getTransaction().isActive()) em.getTransaction().begin();
+                u[0] = (String) finalComboBoxNotSetted.getSelectedItem();
                 patient = em.find(Patient.class, kostya.get(Arrays.asList(l).indexOf(u[0])));
                 Query query = em.createNativeQuery("SELECT * FROM doctor_to_patient where doctor_id =?1 and patient_id =?2");
                 query.setParameter(1, doctor.id);
@@ -83,11 +81,11 @@ public class ConnectionWindow {
                     patient = em.find(Patient.class, kostya.get(Arrays.asList(l).indexOf(u[0])));
                     doctor.add_patient(patient);
                     em.merge(doctor);
-                    docConnectionWindow.fillPatients();
+                    docConnectionWindow.docConnectWin.add(docConnectionWindow.fillPatients(), BorderLayout.CENTER);
                 }
-                docConnectionWindow.fillPatients();
-                em.getTransaction().commit();
 
+                em.getTransaction().commit();
+                docConnectionWindow.docConnectWin.add(docConnectionWindow.fillPatients(), BorderLayout.CENTER);
 
             });
             deleteButton.addActionListener(event -> {
@@ -106,7 +104,7 @@ public class ConnectionWindow {
             docToPat.add(exitButton);
             docToPat.add(confirmButton);
             docToPat.add(deleteButton);
-
+            docConnectionWindow.fillPatients();
             connectWindow.add(docToPat);
         }
         if (doctor == null && patient != null) {
@@ -133,7 +131,7 @@ public class ConnectionWindow {
                 docConnectionWindow.SetVisible(true);
             });
             confirmButton.addActionListener(event -> {
-                em.getTransaction().begin();
+                if(!em.getTransaction().isActive()) em.getTransaction().begin();
                 doctor = em.find(Doctor.class, kostya.get(Arrays.asList(l).indexOf(u)));
                 Query query = em.createNativeQuery("SELECT * FROM doctor_to_patient where doctor_id =?1 and patient_id =?2");
                 query.setParameter(1, doctor.id);
@@ -148,7 +146,7 @@ public class ConnectionWindow {
                 this.docConnectionWindow.fillPatients();
             });
             deleteButton.addActionListener(event -> {
-                em.getTransaction().begin();
+                if(!em.getTransaction().isActive()) em.getTransaction().begin();
                 doctor = em.find(Doctor.class, kostya.get(Arrays.asList(l).indexOf(u)));
                 Query queryd2 = em.createNativeQuery("DELETE FROM doctor_to_patient where doctor_id =?1 and patient_id =?2");
                 queryd2.setParameter(1, doctor.id);

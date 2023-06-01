@@ -31,10 +31,31 @@ class AddWindowTest {
     }
 
     @Test
-    void check_nums() {
-        AddWindow s = new AddWindow();
-        assertFalse(s.check_nums("Введите имя"));
-        assertFalse(s.check_nums("3459a"));
-        assertTrue(s.check_nums("987654567"));
+    void check_nums1() {
+        AddObject s = new AddObject(null);
+        assertFalse(s.checkString("Введите имя"));
+    }
+    @Test
+    void check_nums2() {
+        AddObject s = new AddObject(null);
+        assertFalse(s.checkString("3459a"));
+    }
+
+    @Test
+    void check_nums3() {
+        AddObject s = new AddObject(null);
+        assertTrue(s.checkString("3459"));
+    }
+
+    @Test
+    void check_nulls1() {
+        AddObject s = new AddObject(null);
+        assertTrue(s.checkNULL("3459"));
+    }
+
+    @Test
+    void check_nulls2() {
+        AddObject s = new AddObject(null);
+        assertFalse(s.checkNULL(""));
     }
 }

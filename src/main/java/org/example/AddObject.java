@@ -5,6 +5,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.ArrayList;
+
 import static org.example.NewMainWindow.em;
 
 public class AddObject {
@@ -35,11 +36,10 @@ public class AddObject {
 
     }
 
-    private void checkNULL(JTextField b) throws  NullString {
+    private void checkNULL(JTextField b) throws NullString {
         String word = b.getText();
-        if (word.length() == 0)  throw new NullString();
+        if (word.length() == 0) throw new NullString();
     }
-
 
 
     private void fieldsUp(JPanel panel, ArrayList<JTextField> arr, String[] fieldMassiv, int code) {
@@ -112,7 +112,7 @@ public class AddObject {
                     checkString(b);
                     checkNULL(b);
                 }
-                for (JTextField b : notCheckField){
+                for (JTextField b : notCheckField) {
                     checkNULL(b);
                 }
                 if (!em.getTransaction().isActive()) em.getTransaction().begin();
@@ -170,6 +170,23 @@ public class AddObject {
 
     public void setVisible(boolean flag) {
         AddObj.setVisible(flag);
+    }
+
+    public boolean checkNULL(String word) {
+        return word.length() != 0;
+    }
+
+
+    public boolean checkString(String word) {
+
+        boolean isOnlyDigits = true;
+        for (int i = 0; i < word.length() && isOnlyDigits; i++) {
+            if (!Character.isDigit(word.charAt(i))) {
+                isOnlyDigits = false;
+            }
+        }
+        return isOnlyDigits;
+
     }
 }
 

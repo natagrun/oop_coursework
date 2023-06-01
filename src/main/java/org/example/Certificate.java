@@ -20,7 +20,7 @@ public class Certificate extends Document {
         this.data = data;
     }
     public void createCertificate() throws ParserConfigurationException, DocumentException, FileNotFoundException {
-        String documentName = patientName+" Certificate";
+        String documentName = patientName+" Certificate.pdf";
         PdfWriter.getInstance(this, new FileOutputStream(documentName));
         this.open();
         String para = "CERTIFICATE";

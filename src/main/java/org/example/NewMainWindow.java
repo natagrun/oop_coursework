@@ -76,8 +76,7 @@ public class NewMainWindow {
 
         saveButton.addActionListener(event -> {
             try {
-                em.getTransaction().begin();
-
+                if(!em.getTransaction().isActive()) em.getTransaction().begin();
                 DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
                 Document doc = builder.newDocument();
                 Node booklist = doc.createElement("Hospital");
@@ -143,7 +142,7 @@ public class NewMainWindow {
                 } catch (ParserConfigurationException | SAXException | IOException e) {
                     e.printStackTrace();
                 }
-                em.getTransaction().begin();
+                if(!em.getTransaction().isActive()) em.getTransaction().begin();
                 assert doc != null;
                 NodeList dlBooks = doc.getElementsByTagName("doctors");
                 for (int temp = 0; temp < dlBooks.getLength(); temp++) { // Выбор очередного элемента списка
@@ -227,7 +226,7 @@ public class NewMainWindow {
                 int selIndex = selectedRows[0];
                 TableModel model = mainTable.getModel();
                 Object value = model.getValueAt(selIndex, 0);
-                em.getTransaction().begin();
+                if(!em.getTransaction().isActive()) em.getTransaction().begin();
                 Doctor doctor = em.find(Doctor.class, Integer.parseInt(value.toString()));
                 String[] dataSelect;
                 if (doctor == null) {
@@ -269,7 +268,7 @@ public class NewMainWindow {
     public void updateTables() {
         ArrayList<String[]> dataDoctors = new ArrayList<>();
         ArrayList<String[]> dataPatients = new ArrayList<>();
-        em.getTransaction().begin();
+        if(!em.getTransaction().isActive()) em.getTransaction().begin();
         Query queryd = em.createNativeQuery("SELECT * FROM Person where bd_type ='D' ORDER BY Specialization", Doctor.class);
         List<Doctor> listd = queryd.getResultList();
         for (Doctor doctor : listd) {

@@ -107,7 +107,7 @@ public class EditWindow {
 
             try {
 
-                em.getTransaction().begin();
+                if(!em.getTransaction().isActive()) em.getTransaction().begin();
                 for(JTextField b: listOfFields){
                     checkNULL(b);
                 }
@@ -175,7 +175,7 @@ public class EditWindow {
         confirm.addActionListener(event -> {
 
             try {
-                em.getTransaction().begin();
+                if(!em.getTransaction().isActive()) em.getTransaction().begin();
                 for(JTextField b: listOfFields){
                     checkNULL(b);
                 }

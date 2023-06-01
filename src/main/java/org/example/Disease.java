@@ -10,7 +10,6 @@ public class Disease {
     private int id;
     private String Name;
     private int count;
-
     private List<Patient> patients = new ArrayList<>();
 
     public Disease(String name, int i) {
@@ -60,11 +59,5 @@ public class Disease {
     public void setCount(int count) {
         this.count = count;
     }
-
-    public void Incidense(int i){
-        this.count+=i;
-
-    }
-
 
 }

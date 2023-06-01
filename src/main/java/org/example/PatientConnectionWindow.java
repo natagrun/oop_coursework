@@ -12,6 +12,8 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static org.example.NewMainWindow.em;
+
 public class PatientConnectionWindow {
 
     private final JFrame patConnectWin = new JFrame("Patient appointment");
@@ -24,7 +26,6 @@ public class PatientConnectionWindow {
     public PatientConnectionWindow(NewMainWindow mainWindow, Patient patient) {
         this.mainWindow = mainWindow;
         this.patient = patient;
-
     }
 
 
@@ -52,10 +53,7 @@ public class PatientConnectionWindow {
             ans = new String[dataPatient.size()][dataPatient.get(0).length];
             for (int i = 0; i < ans.length; i++) {
                 ans[i] = dataPatient.get(i);
-            }
-
-        } catch (IndexOutOfBoundsException ignored) {
-        }
+            }}catch (IndexOutOfBoundsException ignored) {}
 
         DefaultTableModel model = new DefaultTableModel(ans, new String[]{"id", "Name", "Count"});
         JTable mainTable = new JTable(model);
@@ -63,19 +61,13 @@ public class PatientConnectionWindow {
         mainTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         ListSelectionModel selModel = mainTable.getSelectionModel();
-        selModel.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                int[] selectedRows = mainTable.getSelectedRows();
-                int selIndex = selectedRows[0];
-                TableModel model = mainTable.getModel();
-                Object value = model.getValueAt(selIndex, 0);
-
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory("test_persistence");
-                EntityManager em = emf.createEntityManager();
-                em.getTransaction().begin();
-                selectedDisease = em.find(Disease.class, Integer.parseInt(value.toString()));
-
-            }
+        selModel.addListSelectionListener(e -> {
+            int[] selectedRows = mainTable.getSelectedRows();
+            int selIndex = selectedRows[0];
+            TableModel model1 = mainTable.getModel();
+            Object value = model1.getValueAt(selIndex, 0);
+            if(!em.getTransaction().isActive()) em.getTransaction().begin();
+            selectedDisease = em.find(Disease.class, Integer.parseInt(value.toString()));
 
         });
 
@@ -103,17 +95,15 @@ public class PatientConnectionWindow {
         deleteButton.addActionListener(event -> {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("test_persistence");
             EntityManager em = emf.createEntityManager();
-            em.getTransaction().begin();
+            if(!em.getTransaction().isActive()) em.getTransaction().begin();
             try {
                 Query queryd2 = em.createNativeQuery("DELETE FROM patient_to_disease where disease_id =?2");
                 queryd2.setParameter(2, selectedDisease.getId());
                 queryd2.executeUpdate();
                 em.getTransaction().commit();
-                patConnectWin.remove(fillPatients());
+                patConnectWin.removeAll();
                 patConnectWin.add(fillPatients(), BorderLayout.CENTER);
             }catch (IndexOutOfBoundsException ignored){}
-
-
         });
 
         JButton exitbutton = new JButton("Exit");
