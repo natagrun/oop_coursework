@@ -1,8 +1,89 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <booklist>
-    <doctors Age="34" Cabinet="2535" Last_Name="Melin" Name="Trenor" Phone="30505" Spec=" Speiialid"
-             WorkDays="Mn,Dd" WorkTime="13:30-17:30"/>
+    <doctors Name="Trenor" Last_Name="Melin" Age="34" Phone="30505" Spec=" Speiialid" WorkDays="Mn,Dd"
+             WorkTime="13:30-17:30" Cabinet="2535"/>
+    <doctors Name="Stephanie" Last_Name="Wade" Age="18" Phone="6198224923" Spec="surgeon"
+             WorkDays="Sunday, Friday, Monday, Saturday" WorkTime="17:00-20:00" Cabinet="624"/>
+    <doctors Name="Frank" Last_Name="White" Age="65" Phone="6973268733" Spec="cardiologist"
+             WorkDays="Monday, Thursday, Tuesday" WorkTime="8:00-13:00" Cabinet="326"/>
+    <doctors Name="Monica" Last_Name="Stewart" Age="24" Phone="4676660474" Spec="cardiologist"
+             WorkDays="Sunday, Thursday, Saturday" WorkTime="18:00-20:00" Cabinet="366"/>
+    <doctors Name="Florence" Last_Name="Davis" Age="32" Phone="1056241337" Spec="psychiatrist"
+             WorkDays="Sunday, Thursday, Friday, Monday, Tuesday" WorkTime="19:00-20:00" Cabinet="211"/>
+    <doctors Name="Donna" Last_Name="Campbell" Age="61" Phone="4802214588" Spec="dermatologist"
+             WorkDays="Wednesday, Friday, Thursday, Saturday" WorkTime="19:00-20:00" Cabinet="635"/>
+    <doctors Name="Judith" Last_Name="Hernandez" Age="89" Phone="7553741037" Spec="ophthalmologist"
+             WorkDays="Sunday, Friday" WorkTime="15:00-19:00" Cabinet="751"/>
+    <doctors Name="Bobbie" Last_Name="Sullivan" Age="37" Phone="8593166207" Spec="dermatologist" WorkDays="Saturday"
+             WorkTime="11:00-17:00" Cabinet="426"/>
+    <doctors Name="David" Last_Name="King" Age="75" Phone="2165424342" Spec="cardiologist"
+             WorkDays="Sunday, Thursday, Saturday" WorkTime="17:00-20:00" Cabinet="790"/>
+    <doctors Name="William" Last_Name="Jordan" Age="87" Phone="2594096252" Spec="endocrinologist"
+             WorkDays="Friday, Monday, Tuesday" WorkTime="16:00-18:00" Cabinet="460"/>
+    <doctors Name="Tammy" Last_Name="Garza" Age="47" Phone="2466012407" Spec="oncologist" WorkDays="Thursday, Saturday"
+             WorkTime="15:00-20:00" Cabinet="842"/>
+    <doctors Name="Michael" Last_Name="Phillips" Age="69" Phone="6822414872" Spec="rheumatologist"
+             WorkDays="Sunday, Friday, Thursday, Tuesday" WorkTime="14:00-20:00" Cabinet="341"/>
+    <doctors Name="Jean" Last_Name="Jenkins" Age="49" Phone="5033488371" Spec="psychiatrist" WorkDays="Sunday, Tuesday"
+             WorkTime="17:00-19:00" Cabinet="227"/>
+    <doctors Name="Julian" Last_Name="Wilson" Age="68" Phone="6827383307" Spec="pediatrician"
+             WorkDays="Sunday, Wednesday, Thursday, Tuesday" WorkTime="14:00-17:00" Cabinet="662"/>
+    <doctors Name="Victor" Last_Name="Thompson" Age="80" Phone="8208637802" Spec="pediatrician"
+             WorkDays="Sunday, Tuesday, Saturday" WorkTime="8:00-10:00" Cabinet="393"/>
+    <doctors Name="Ana" Last_Name="McBride" Age="46" Phone="6650211176" Spec="ophthalmologist"
+             WorkDays="Friday, Monday, Thursday, Tuesday" WorkTime="16:00-18:00" Cabinet="501"/>
+    <doctors Name="Randy" Last_Name="Klein" Age="68" Phone="1959890597" Spec="pediatrician"
+             WorkDays="Sunday, Monday, Wednesday, Saturday" WorkTime="16:00-20:00" Cabinet="590"/>
+    <doctors Name="Marion" Last_Name="Curtis" Age="78" Phone="8043695588" Spec="pediatrician"
+             WorkDays="Sunday, Wednesday, Saturday" WorkTime="13:00-18:00" Cabinet="387"/>
+    <doctors Name="Antonio" Last_Name="Wilson" Age="87" Phone="4560687493" Spec="geneticist"
+             WorkDays="Sunday, Monday, Tuesday, Wednesday, Saturday" WorkTime="10:00-11:00" Cabinet="314"/>
+    <doctors Name="Nathan" Last_Name="Allen" Age="36" Phone="1106878805" Spec="physiologist"
+             WorkDays="Wednesday, Monday, Tuesday, Saturday" WorkTime="9:00-19:00" Cabinet="574"/>
+    <doctors Name="Barry" Last_Name="Bryant" Age="56" Phone="5505892205" Spec="dentist"
+             WorkDays="Wednesday, Sunday, Saturday" WorkTime="13:00-17:00" Cabinet="616"/>
 
     <patients Age="78" BloodType="3" Last_Name="Rers" Name="Start" Phone="848733"/>
+    <patients Name="Elsie" Last_Name="Porter" Age="79" Phone="3598478413" BloodType="2"/>
+    <patients Name="Robert" Last_Name="Bennett" Age="53" Phone="8687719610" BloodType="4"/>
+    <patients Name="Sarah" Last_Name="Watson" Age="18" Phone="7318430700" BloodType="1"/>
+    <patients Name="Sandra" Last_Name="Thompson" Age="77" Phone="4167463081" BloodType="1"/>
+    <patients Name="Ricardo" Last_Name="Phillips" Age="26" Phone="2761952350" BloodType="4"/>
+    <patients Name="Diane" Last_Name="Cummings" Age="25" Phone="7631789235" BloodType="4"/>
+    <patients Name="William" Last_Name="Steele" Age="76" Phone="6146863117" BloodType="2"/>
+    <patients Name="Pamela" Last_Name="Wright" Age="38" Phone="1488582497" BloodType="2"/>
+    <patients Name="Rita" Last_Name="Harmon" Age="73" Phone="9034064534" BloodType="3"/>
+    <patients Name="Ronnie" Last_Name="Burgess" Age="43" Phone="3996373034" BloodType="1"/>
+
+    <diseases Name="Abscess"/>
+    <diseases Name="AIDS"/>
+    <diseases Name="Allergy"/>
+    <diseases Name="Angina"/>
+    <diseases Name="Brain"/>
+    <diseases Name="Break"/>
+    <diseases Name="Bronchitis"/>
+    <diseases Name="Burn"/>
+    <diseases Name="Cancer"/>
+    <diseases Name="Chickenpox"/>
+    <diseases Name="Cold"/>
+    <diseases Name="Contagious"/>
+    <diseases Name="Diabetes"/>
+    <diseases Name="Dislocation"/>
+    <diseases Name="Disordered"/>
+    <diseases Name="Dysentery"/>
+    <diseases Name="Epilepsy"/>
+    <diseases Name="Hypertension"/>
+    <diseases Name="Inflammation"/>
+    <diseases Name="Influenza"/>
+    <diseases Name="Measles"/>
+    <diseases Name="Nephritis"/>
+    <diseases Name="Pharyngitis"/>
+    <diseases Name="Pneumonia"/>
+    <diseases Name="Rheumatism"/>
+    <diseases Name="Smallpox"/>
+    <diseases Name="Tonsillitis"/>
+    <diseases Name="Tuberculosis"/>
+    <diseases Name="Tumour"/>
+    <diseases Name="Ulcer"/>
 
 </booklist>

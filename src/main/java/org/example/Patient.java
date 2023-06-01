@@ -61,12 +61,7 @@ public class Patient extends Person {
         return this.doctors;
     }
 
-    public void setDoctors(List<Doctor> doctors1) {
-        this.doctors = doctors1;
+    public void setDoctors(List<Doctor> doctors) {
+        this.doctors = doctors;
     }
-
-    public void getCertificate() {
-        System.out.println("Certificate");
-    }
-
 }

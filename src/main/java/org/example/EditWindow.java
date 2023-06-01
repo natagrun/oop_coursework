@@ -1,20 +1,16 @@
 package org.example;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
+import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import static org.example.NewMainWindow.em;
 
 public class EditWindow {
-    private JFrame editWindow = new JFrame("Editing..");
+    private final JFrame editWindow = new JFrame("Editing..");
 
-    private int id;
+    private final int id;
     private final NewMainWindow mainWindow;
+
+    ArrayList<JTextField> listOfFields = new ArrayList<>();
 
     public EditWindow(NewMainWindow mainWindow, int id) {
         this.mainWindow = mainWindow;
@@ -33,13 +29,16 @@ public class EditWindow {
 
     }
 
+    private void checkNULL(JTextField b) throws  NullString {
+        String word = b.getText();
+        if (word.length() == 0)  throw new NullString();
+    }
+
     public void setEditWindowDoc(int code) {
         editWindow.setSize(500, 600);
         editWindow.setLocation(400, 150);
         editWindow.setLayout(new GridLayout(9, 2, 1, 1));
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("test_persistence");
-        EntityManager em = emf.createEntityManager();
-
+        if(!em.getTransaction().isActive()) em.getTransaction().begin();
         if(code==1){
 
         Doctor doctor = em.find(Doctor.class, id);
@@ -47,20 +46,24 @@ public class EditWindow {
         JTextField namefield = new JTextField(doctor.getName());
         editWindow.add(nameBar);
         editWindow.add(namefield);
+            listOfFields.add(namefield);
         JLabel lnameBar = new JLabel("Last name");
         JTextField lnamefield = new JTextField(doctor.getLastName());
         editWindow.add(lnameBar);
         editWindow.add(lnamefield);
+            listOfFields.add(lnamefield);
 
         JLabel ageBar = new JLabel("Age");
         JTextField ageField = new JTextField(String.valueOf(doctor.getAge()));
         editWindow.add(ageBar);
         editWindow.add(ageField);
+            listOfFields.add(ageField);
 
         JLabel phoneBar = new JLabel("Phone number");
         JTextField phoneField = new JTextField(doctor.getPhoneNumber());
         editWindow.add(phoneBar);
         editWindow.add(phoneField);
+            listOfFields.add(phoneField);
 
         JLabel numberBar = new JLabel();
         JTextField numberField = new JTextField();
@@ -69,23 +72,27 @@ public class EditWindow {
         JTextField specfield = new JTextField(doctor.getSpecialization());
         editWindow.add(specBar);
         editWindow.add(specfield);
+            listOfFields.add(specfield);
 
         JLabel wdBar = new JLabel("Work days");
         JTextField wdfield = new JTextField(doctor.getWork_days());
         editWindow.add(wdBar);
         editWindow.add(wdfield);
+            listOfFields.add(wdfield);
 
 
         JLabel wtBAr = new JLabel("Work time");
         JTextField wtfield = new JTextField(doctor.getWork_time());
         editWindow.add(wtBAr);
         editWindow.add(wtfield);
+            listOfFields.add(wtfield);
 
 
         numberBar.setText("Cabinet");
         numberField.setText(String.valueOf(doctor.getCabinet()));
         editWindow.add(numberBar);
         editWindow.add(numberField);
+            listOfFields.add(numberField);
 
 
         JButton exit = new JButton("Exit");
@@ -99,7 +106,11 @@ public class EditWindow {
         confirm.addActionListener(event -> {
 
             try {
+
                 em.getTransaction().begin();
+                for(JTextField b: listOfFields){
+                    checkNULL(b);
+                }
                 checkString(ageField);
                 checkString(numberField);
                 doctor.setName(namefield.getText());
@@ -114,7 +125,7 @@ public class EditWindow {
                 em.merge(doctor);
                 em.getTransaction().commit();
                 mainWindow.updateTables();
-            } catch (LetterInNumber e) {
+            } catch (LetterInNumber | NullString e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
         });
@@ -128,22 +139,22 @@ public class EditWindow {
         JTextField namefield = new JTextField(patient.getName());
         editWindow.add(nameBar);
         editWindow.add(namefield);
-
+            listOfFields.add(namefield);
         JLabel lnameBar = new JLabel("Last name");
         JTextField lnamefield = new JTextField(patient.getLastName());
         editWindow.add(lnameBar);
         editWindow.add(lnamefield);
-
+            listOfFields.add(lnamefield);
         JLabel ageBar = new JLabel("Age");
         JTextField ageField = new JTextField(String.valueOf(patient.getAge()));
         editWindow.add(ageBar);
         editWindow.add(ageField);
-
+            listOfFields.add(ageField);
         JLabel phoneBar = new JLabel("Phone number");
         JTextField phoneField = new JTextField(patient.getPhoneNumber());
         editWindow.add(phoneBar);
         editWindow.add(phoneField);
-
+            listOfFields.add(phoneField);
         JLabel numberBar = new JLabel();
         JTextField numberField = new JTextField();
 
@@ -151,7 +162,7 @@ public class EditWindow {
         numberField.setText(String.valueOf(patient.getBloodType()));
         editWindow.add(numberBar);
         editWindow.add(numberField);
-
+            listOfFields.add(numberField);
 
         JButton exit = new JButton("Exit");
         JButton confirm = new JButton("Confirm");
@@ -165,6 +176,10 @@ public class EditWindow {
 
             try {
                 em.getTransaction().begin();
+                for(JTextField b: listOfFields){
+                    checkNULL(b);
+                }
+                checkString(phoneField);
                 checkString(ageField);
                 checkString(numberField);
                 patient.setName(namefield.getText());
@@ -174,14 +189,15 @@ public class EditWindow {
                 patient.setBloodType(Integer.parseInt(numberField.getText()));
                 mainWindow.updateTables();
                 em.merge(patient);
-            } catch (LetterInNumber e) {
+                em.getTransaction().commit();
+            } catch (LetterInNumber | NullString e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
         });
-        em.getTransaction().commit();
         editWindow.add(exit);
         editWindow.add(confirm);
-    }}
+    }
+    }
 
     public void SetVisible(boolean flag) {
         editWindow.setVisible(flag);

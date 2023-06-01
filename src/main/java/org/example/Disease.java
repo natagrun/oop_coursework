@@ -13,6 +13,11 @@ public class Disease {
 
     private List<Patient> patients = new ArrayList<>();
 
+    public Disease(String name, int i) {
+        this.Name=name;
+        this.count=i;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

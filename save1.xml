@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<booklist>
+    <doctors Name="Milly" Last_Name="Brown" Age="34" Phone="349054" Spec=" Spec" WorkDays="Mn,Dd"
+             WorkTime="13:30-17:30" Cabinet="6543"/>
+
+    <patients Age="54" BloodType="3" Last_Name="Monday" Name="Sun" Phone="399595"/>
+
+
+    <diseases Name="Oop course work"/>
+</booklist>

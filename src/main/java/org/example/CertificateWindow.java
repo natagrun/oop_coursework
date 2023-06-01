@@ -1,11 +1,6 @@
 package org.example;
 
 import com.itextpdf.text.DocumentException;
-import org.w3c.dom.Document;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -17,9 +12,16 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.List;
 
-public class CertificateWindow {
-    private JFrame certifWin = new JFrame("Make certificate");
+import static org.example.NewMainWindow.em;
 
+public class CertificateWindow {
+    private final JFrame certifWin = new JFrame("Make certificate");
+
+    public Patient patient;
+
+    public CertificateWindow(Patient patient) {
+        this.patient = patient;
+    }
 
     private void checkString(JTextField b) throws LetterInNumber {
         String word = b.getText();
@@ -35,36 +37,27 @@ public class CertificateWindow {
     }
 
     private String[] fillItems(int code) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("test_persistence");
-        EntityManager em = emf.createEntityManager();
         String[] l1 = new String[1];
         if (code == 1) {
-            em.getTransaction().begin();
+            if (!em.getTransaction().isActive()) em.getTransaction().begin();
             Query queryd = em.createNativeQuery("SELECT * FROM Person where bd_type ='D'", Doctor.class);
             List<Doctor> list = queryd.getResultList();
             String[] l = new String[list.size()];
             for (int i = 0; i < list.size(); i++) {
-                l[i] = list.get(i).getName() + " " + list.get(i).getLastName();
-            }
+
+                l[i] = list.get(i).getName() + " " + list.get(i).getLastName();}
+
             return l;
         }
-        if (code == 2) {
-            em.getTransaction().begin();
-            Query queryd = em.createNativeQuery("SELECT * FROM Person where bd_type ='P'", Patient.class);
-            List<Patient> list = queryd.getResultList();
-            String[] l = new String[list.size()];
-            for (int i = 0; i < list.size(); i++) {
-                l[i] = list.get(i).getName() + " " + list.get(i).getLastName();
-            }
-            return l;
-        }
+
         if (code == 3) {
             em.getTransaction().begin();
             Query queryd = em.createNativeQuery("SELECT * FROM Disease", Disease.class);
             List<Disease> list = queryd.getResultList();
             String[] l = new String[list.size()];
             for (int i = 0; i < list.size(); i++) {
-                l[i] = list.get(i).getName();
+                    l[i] = list.get(i).getName();
+
             }
             return l;
         }
@@ -84,21 +77,20 @@ public class CertificateWindow {
 
         String[] itemsD = fillItems(1);
         JComboBox comboBoxDoctor = new JComboBox(itemsD);
-        String doctorName;
 
-        ActionListener actionListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        String[] itemsDis = fillItems(3);
+        JComboBox comboBoxDisease = new JComboBox(itemsDis);
 
-            }
+
+        ActionListener actionListener = e -> {
+
         };
         comboBoxDoctor.addActionListener(actionListener);
 
 
-        String[] itemsP = fillItems(2);
-        JComboBox comboBoxPatient = new JComboBox(itemsP);
+        JLabel pat = new JLabel(this.patient.getName()+" "+ this.patient.getLastName());
 
-        String[] itemsDis = fillItems(3);
-        JComboBox comboBoxDisease = new JComboBox(itemsDis);
+
 
 
         // Определение маски и содание поля ввода мобильного телефона
@@ -111,7 +103,7 @@ public class CertificateWindow {
 
 
         certifWin.add(patient);
-        certifWin.add(comboBoxPatient);
+        certifWin.add(pat);
         certifWin.add(doctor);
         certifWin.add(comboBoxDoctor);
         certifWin.add(disease);
@@ -125,18 +117,12 @@ public class CertificateWindow {
 
             try {
                 checkString(dataField);
-                Certificate doc = new Certificate(comboBoxPatient.getSelectedItem().toString(),
+                Certificate doc = new Certificate(pat.getText(),
                         comboBoxDoctor.getSelectedItem().toString(), comboBoxDisease.getSelectedItem().toString(),
                         dataField.getText());
                 doc.createCertificate();
 
-            } catch (LetterInNumber e) {
-                throw new RuntimeException(e);
-            } catch (DocumentException e) {
-                throw new RuntimeException(e);
-            } catch (ParserConfigurationException e) {
-                throw new RuntimeException(e);
-            } catch (FileNotFoundException e) {
+            } catch (LetterInNumber | DocumentException | ParserConfigurationException | FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
 

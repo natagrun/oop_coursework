@@ -2,18 +2,9 @@ package org.example;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Certificate extends Document {
@@ -29,7 +20,8 @@ public class Certificate extends Document {
         this.data = data;
     }
     public void createCertificate() throws ParserConfigurationException, DocumentException, FileNotFoundException {
-        PdfWriter.getInstance(this, new FileOutputStream("NewLIFEJKFKKKE.pdf"));
+        String documentName = patientName+" Certificate";
+        PdfWriter.getInstance(this, new FileOutputStream(documentName));
         this.open();
         String para = "CERTIFICATE";
         ArrayList<Paragraph> parrs = new ArrayList<>();
@@ -38,7 +30,7 @@ public class Certificate extends Document {
         paragraph.setAlignment(Element.ALIGN_CENTER);
         paragraph.setFont(f);
         this.add(paragraph);
-        String namelast = "Name and Surname: "+this.patientName;;
+        String namelast = "Name and Surname: "+ this.patientName;
         Paragraph paragraphName = new Paragraph (namelast);
         parrs.add(paragraphName);
 

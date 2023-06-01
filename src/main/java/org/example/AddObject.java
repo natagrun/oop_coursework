@@ -1,22 +1,19 @@
 package org.example;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import static org.example.NewMainWindow.em;
 
 public class AddObject {
     private String Name, LastName, Age, PhoneNum, Spec, Cabinet, Work_days, Work_time, BloodType;
 
-    private final String[] doctorStringFields = {Name, LastName, PhoneNum, Spec, Work_days, Work_time};
-    private final String[] doctorNumberFields = {Age, Cabinet};
-    private final String[] patientStringFields = {Name, LastName, PhoneNum};
-    private final String[] patientNumberFields = {Age, BloodType};
+    private final String[] doctorStringFields = {Name, LastName, Spec, Work_days, Work_time};
+    private final String[] doctorNumberFields = {PhoneNum, Age, Cabinet};
+    private final String[] patientStringFields = {Name, LastName};
+    private final String[] patientNumberFields = {PhoneNum, Age, BloodType};
     private final String[] diseaseFields = {Name};
 
     private final JFrame AddObj = new JFrame("Adding");
@@ -38,13 +35,30 @@ public class AddObject {
 
     }
 
-    private void fieldsUp(JPanel panel, ArrayList<JTextField> arr, String[] fieldMassiv, int code){
+    private void checkNULL(JTextField b) throws  NullString {
+        String word = b.getText();
+        if (word.length() == 0)  throw new NullString();
+    }
+
+
+
+    private void fieldsUp(JPanel panel, ArrayList<JTextField> arr, String[] fieldMassiv, int code) {
         String[] names = new String[0];
-        if (code == 2){names= new String[]{"Name", "LastName", "Phone number", "Specialization", "Work days", "Work time"};}
-        if (code == 3){names= new String[]{"Age (number field)", "Cabinet(number field)"};}
-        if (code == 5){names= new String[]{"Name", "LastName","Phone number"};}
-        if (code == 6){names= new String[]{"Age (number field)", "Blood type (number field)"};}
-        if (code == 8){names= new String[]{"Name"};}
+        if (code == 2) {
+            names = new String[]{"Name", "LastName", "Specialization", "Work days", "Work time"};
+        }
+        if (code == 3) {
+            names = new String[]{"Phone number(number field)", "Age (number field)", "Cabinet(number field)"};
+        }
+        if (code == 5) {
+            names = new String[]{"Name", "LastName"};
+        }
+        if (code == 6) {
+            names = new String[]{"Phone number(number field)", "Age (number field)", "Blood type (number field)"};
+        }
+        if (code == 8) {
+            names = new String[]{"Name"};
+        }
         for (int i = 0; i < fieldMassiv.length; i++) {
             String f = fieldMassiv[i];
             JLabel fLabel = new JLabel("Enter " + names[i]);
@@ -69,13 +83,13 @@ public class AddObject {
         }
     }
 
-    private JPanel fillWithFields(String[] strFields, String[] numberFields,int code) {
+    private JPanel fillWithFields(String[] strFields, String[] numberFields, int code) {
         ArrayList<JTextField> notCheckField = new ArrayList<>();
         ArrayList<JTextField> checkField = new ArrayList<>();
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(9, 2, 3, 3));
-        fieldsUp(panel,notCheckField,strFields, code+1);
-        fieldsUp(panel,checkField,numberFields,code+2);
+        fieldsUp(panel, notCheckField, strFields, code + 1);
+        fieldsUp(panel, checkField, numberFields, code + 2);
 
 
         JButton exit = new JButton("Exit");
@@ -93,20 +107,21 @@ public class AddObject {
         });
 
         confirm.addActionListener(event -> {
-
             try {
                 for (JTextField b : checkField) {
                     checkString(b);
+                    checkNULL(b);
                 }
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory("test_persistence");
-                EntityManager em = emf.createEntityManager();
-                em.getTransaction().begin();
-                if (strFields.length == 6) {
-                    Doctor doctor = new Doctor(doctorStringFields[0], doctorStringFields[1], Integer.parseInt(doctorNumberFields[0]), doctorStringFields[2], doctorStringFields[3], Integer.parseInt(doctorNumberFields[1]), doctorStringFields[4], doctorStringFields[5]);
+                for (JTextField b : notCheckField){
+                    checkNULL(b);
+                }
+                if (!em.getTransaction().isActive()) em.getTransaction().begin();
+                if (strFields.length == 5) {
+                    Doctor doctor = new Doctor(doctorStringFields[0], doctorStringFields[1], Integer.parseInt(doctorNumberFields[1]), doctorNumberFields[0], doctorStringFields[2], Integer.parseInt(doctorNumberFields[2]), doctorStringFields[3], doctorStringFields[4]);
                     em.persist(doctor);
                 }
-                if (strFields.length == 3) {
-                    Patient patient = new Patient(patientStringFields[0], patientStringFields[1], Integer.parseInt(patientNumberFields[0]), patientStringFields[2], Integer.parseInt(patientNumberFields[1]));
+                if (strFields.length == 2) {
+                    Patient patient = new Patient(patientStringFields[0], patientStringFields[1], Integer.parseInt(patientNumberFields[1]), patientNumberFields[0], Integer.parseInt(patientNumberFields[2]));
                     em.persist(patient);
                 }
                 if (strFields.length == 1) {
@@ -128,7 +143,7 @@ public class AddObject {
                     b.setText("");
                 }
                 mainWindow.updateTables();
-            } catch (LetterInNumber e) {
+            } catch (LetterInNumber | NullString e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
         });
@@ -142,12 +157,12 @@ public class AddObject {
         AddObj.setLocation(400, 150);
         JTabbedPane tabsFolder = new JTabbedPane(JTabbedPane.TOP);
         AddObj.add(tabsFolder, BorderLayout.CENTER);
-        JPanel doctorPanel = new JPanel();
-        doctorPanel = fillWithFields(doctorStringFields, doctorNumberFields,1);
-        JPanel patientPanel = new JPanel();
-        patientPanel = fillWithFields(patientStringFields, patientNumberFields,4);
-        JPanel diseasePanel = new JPanel();
-        diseasePanel = fillWithFields(diseaseFields, new String[0],7);
+        JPanel doctorPanel;
+        doctorPanel = fillWithFields(doctorStringFields, doctorNumberFields, 1);
+        JPanel patientPanel;
+        patientPanel = fillWithFields(patientStringFields, patientNumberFields, 4);
+        JPanel diseasePanel;
+        diseasePanel = fillWithFields(diseaseFields, new String[0], 7);
         tabsFolder.addTab("Doctor", new ImageIcon("/Users/natalagrunskaa/Downloads/doctor.png"), doctorPanel, "Открыть таблицу докторов");
         tabsFolder.addTab("Patient", new ImageIcon("/Users/natalagrunskaa/Downloads/doctor.png"), patientPanel, "Открыть таблицу докторов");
         tabsFolder.addTab("Disease", new ImageIcon("/Users/natalagrunskaa/Downloads/doctor.png"), diseasePanel, "Открыть таблицу докторов");
