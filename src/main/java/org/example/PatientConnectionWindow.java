@@ -5,14 +5,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static org.example.NewMainWindow.em;
+import static org.example.NewMainWindow.service;
 
 public class PatientConnectionWindow {
 
@@ -66,8 +64,7 @@ public class PatientConnectionWindow {
             int selIndex = selectedRows[0];
             TableModel model1 = mainTable.getModel();
             Object value = model1.getValueAt(selIndex, 0);
-            if(!em.getTransaction().isActive()) em.getTransaction().begin();
-            selectedDisease = em.find(Disease.class, Integer.parseInt(value.toString()));
+            selectedDisease = service.getDisease( Integer.parseInt(value.toString()));
 
         });
 
@@ -93,14 +90,8 @@ public class PatientConnectionWindow {
         buttons.add(deleteButton);
 
         deleteButton.addActionListener(event -> {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("test_persistence");
-            EntityManager em = emf.createEntityManager();
-            if(!em.getTransaction().isActive()) em.getTransaction().begin();
             try {
-                Query queryd2 = em.createNativeQuery("DELETE FROM patient_to_disease where disease_id =?2");
-                queryd2.setParameter(2, selectedDisease.getId());
-                queryd2.executeUpdate();
-                em.getTransaction().commit();
+                service.deleteDiseaseFromPatient(selectedDisease.getId(), patient.getId());
                 patConnectWin.removeAll();
                 patConnectWin.add(fillPatients(), BorderLayout.CENTER);
             }catch (IndexOutOfBoundsException ignored){}

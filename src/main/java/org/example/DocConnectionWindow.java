@@ -1,11 +1,10 @@
 package org.example;
-import javax.persistence.Query;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
-import static org.example.NewMainWindow.em;
+import static org.example.NewMainWindow.service;
 
 public class DocConnectionWindow {
 
@@ -62,9 +61,7 @@ public class DocConnectionWindow {
             int selIndex = selectedRows[0];
             TableModel model1 = mainTable.getModel();
             Object value = model1.getValueAt(selIndex, 0);
-            if(!em.getTransaction().isActive()) em.getTransaction().begin();
-            selectedPatient = em.find(Patient.class, Integer.parseInt(value.toString()));
-            System.out.println(selectedPatient.toString());
+            selectedPatient = service.getPatient(Integer.parseInt(value.toString()));
         });
 
         JScrollPane scroll = new JScrollPane(mainTable);
@@ -86,12 +83,8 @@ public class DocConnectionWindow {
         buttons.add(deleteButton);
 
         deleteButton.addActionListener(event -> {
-            if(!em.getTransaction().isActive()) em.getTransaction().begin();
             try {
-                Query queryd2 = em.createNativeQuery("DELETE FROM doctor_to_patient where patient_id =?2");
-                queryd2.setParameter(2, selectedPatient.id);
-                queryd2.executeUpdate();
-                em.getTransaction().commit();
+                service.deletePatientFromDoctor(doctor.getId(), selectedPatient.getId());
                 docConnectWin.add(fillPatients(), BorderLayout.CENTER);
             }catch (IndexOutOfBoundsException ignored){}
         });

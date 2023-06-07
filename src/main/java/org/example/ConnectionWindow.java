@@ -1,16 +1,11 @@
 package org.example;
-
-import javax.persistence.Query;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.example.NewMainWindow.em;
+import static org.example.NewMainWindow.service;
 
 public class ConnectionWindow {
     private final JFrame connectWindow = new JFrame("Making connection");
@@ -39,9 +34,7 @@ public class ConnectionWindow {
         JComboBox comboBoxNotSetted;
 
         if (doctor != null && patient == null) {
-            if (!em.getTransaction().isActive()) em.getTransaction().begin();
-            Query queryd = em.createNativeQuery("SELECT * FROM Person where bd_type ='P'", Patient.class);
-            List<Patient> list = queryd.getResultList();
+            List<Patient> list =service.getAllPatients();
             String[] l = new String[list.size()];
             ArrayList<Integer> kostya = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
@@ -69,36 +62,20 @@ public class ConnectionWindow {
             });
             JComboBox finalComboBoxNotSetted = comboBoxNotSetted;
             confirmButton.addActionListener(event -> {
-                if(!em.getTransaction().isActive()) em.getTransaction().begin();
                 u[0] = (String) finalComboBoxNotSetted.getSelectedItem();
-                patient = em.find(Patient.class, kostya.get(Arrays.asList(l).indexOf(u[0])));
-                Query query = em.createNativeQuery("SELECT * FROM doctor_to_patient where doctor_id =?1 and patient_id =?2");
-                query.setParameter(1, doctor.id);
-                query.setParameter(2, patient.id);
-                List liss = query.getResultList();
-                System.out.println(liss);
-                if (liss.size() == 0) {
-                    patient = em.find(Patient.class, kostya.get(Arrays.asList(l).indexOf(u[0])));
-                    doctor.add_patient(patient);
-                    em.merge(doctor);
+                patient=service.getPatient(kostya.get(Arrays.asList(l).indexOf(u[0])));
+                if (service.getDoctorPatientConnections(doctor.id,patient.id)) {
+                    patient = service.getPatient(kostya.get(Arrays.asList(l).indexOf(u[0])));
+                    service.addPatientToDoctor(patient,doctor);
                     docConnectionWindow.docConnectWin.add(docConnectionWindow.fillPatients(), BorderLayout.CENTER);
                 }
-
-                em.getTransaction().commit();
                 docConnectionWindow.docConnectWin.add(docConnectionWindow.fillPatients(), BorderLayout.CENTER);
 
             });
             deleteButton.addActionListener(event -> {
-
-                if (!em.getTransaction().isActive()) em.getTransaction().begin();
-
-                patient = em.find(Patient.class, kostya.get(Arrays.asList(l).indexOf(u[0])));
-                Query queryd2 = em.createNativeQuery("DELETE FROM doctor_to_patient where doctor_id =?1 and patient_id =?2");
-                queryd2.setParameter(1, doctor.id);
-                queryd2.setParameter(2, patient.id);
-                queryd2.executeUpdate();
+                patient = service.getPatient((Arrays.asList(l).indexOf(u[0])));
+                service.deletePatientFromDoctor(doctor.id,patient.id);
                 docConnectionWindow.fillPatients();
-                em.getTransaction().commit();
             });
 
             docToPat.add(exitButton);
@@ -108,9 +85,7 @@ public class ConnectionWindow {
             connectWindow.add(docToPat);
         }
         if (doctor == null && patient != null) {
-            if (!em.getTransaction().isActive()) em.getTransaction().begin();
-            Query queryd = em.createNativeQuery("SELECT * FROM Person where bd_type ='D'", Doctor.class);
-            List<Doctor> list = queryd.getResultList();
+            List<Doctor> list = service.getAllDoctors();
             String[] l = new String[list.size()];
             ArrayList<Integer> kostya = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
@@ -122,7 +97,7 @@ public class ConnectionWindow {
             docToPat.add(patName);
             docToPat.add(comboBoxNotSetted);
             String u = comboBoxNotSetted.getSelectedItem().toString();
-            doctor = em.find(Doctor.class, kostya.get(Arrays.asList(l).indexOf(u)));
+            doctor = service.getDoctor(kostya.get(Arrays.asList(l).indexOf(u)));
             JButton exitButton = new JButton("Exit");
             JButton confirmButton = new JButton("Confirm");
             JButton deleteButton = new JButton("Delete connection");
@@ -131,29 +106,17 @@ public class ConnectionWindow {
                 docConnectionWindow.SetVisible(true);
             });
             confirmButton.addActionListener(event -> {
-                if(!em.getTransaction().isActive()) em.getTransaction().begin();
-                doctor = em.find(Doctor.class, kostya.get(Arrays.asList(l).indexOf(u)));
-                Query query = em.createNativeQuery("SELECT * FROM doctor_to_patient where doctor_id =?1 and patient_id =?2");
-                query.setParameter(1, doctor.id);
-                query.setParameter(2, patient.id);
-                List liss = query.getResultList();
-                if (liss.size() == 0) {
-                    doctor.add_patient(patient);
-                    em.merge(doctor);
+                doctor = service.getDoctor(Arrays.asList(l).indexOf(u));
+                if (service.getDoctorPatientConnections(doctor.id, patient.id)) {
+                    service.addPatientToDoctor(patient,doctor);
 
                 }
-                em.getTransaction().commit();
                 this.docConnectionWindow.fillPatients();
             });
             deleteButton.addActionListener(event -> {
-                if(!em.getTransaction().isActive()) em.getTransaction().begin();
-                doctor = em.find(Doctor.class, kostya.get(Arrays.asList(l).indexOf(u)));
-                Query queryd2 = em.createNativeQuery("DELETE FROM doctor_to_patient where doctor_id =?1 and patient_id =?2");
-                queryd2.setParameter(1, doctor.id);
-                queryd2.setParameter(2, patient.id);
-                queryd2.executeUpdate();
+                doctor = service.getDoctor(kostya.get(Arrays.asList(l).indexOf(u)));
+                service.deletePatientFromDoctor(doctor.id,patient.id);
                 this.docConnectionWindow.fillPatients();
-                em.getTransaction().commit();
             });
             docToPat.add(exitButton);
             docToPat.add(confirmButton);

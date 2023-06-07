@@ -2,38 +2,32 @@ package org.example;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-
-import javax.persistence.*;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NewMainWindow {
+
+    static final Service service = new Service();
+
     private final JFrame MainWindow = new JFrame("CourseWork");
     private final ArrayList<JButton> toolBarButtons = new ArrayList<>();
     private final JTabbedPane tabsFolder = new JTabbedPane(JTabbedPane.LEFT);
-    static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("test_persistence");
-    static final EntityManager em = emf.createEntityManager();
     private JToolBar toolBar;
 
     public void SetVisible(boolean flag) {
@@ -76,13 +70,11 @@ public class NewMainWindow {
 
         saveButton.addActionListener(event -> {
             try {
-                if(!em.getTransaction().isActive()) em.getTransaction().begin();
                 DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
                 Document doc = builder.newDocument();
                 Node booklist = doc.createElement("Hospital");
                 doc.appendChild(booklist);
-                Query queryd = em.createNativeQuery("SELECT * FROM Person where bd_type ='D'", Doctor.class);
-                List<Doctor> listd = queryd.getResultList();
+                List<Doctor> listd = service.getAllDoctors();
                 for (Doctor doctor : listd) {
                     Element doctors = doc.createElement("doctors");
                     booklist.appendChild(doctors);
@@ -97,8 +89,8 @@ public class NewMainWindow {
 
 
                 }
-                queryd = em.createNativeQuery("SELECT * FROM Person where bd_type ='P'", Patient.class);
-                List<Patient> listp = queryd.getResultList();
+
+                List<Patient> listp = service.getAllPatients();
                 for (Patient patient : listp) {
                     Element patietns = doc.createElement("patients");
                     booklist.appendChild(patietns);
@@ -109,8 +101,7 @@ public class NewMainWindow {
                     patietns.setAttribute("BloodType", String.valueOf(patient.getBloodType()));
 
                 }
-                queryd = em.createNativeQuery("SELECT * FROM Disease", Disease.class);
-                List<Disease> listdis = queryd.getResultList();
+                List<Disease> listdis = service.getAllDiseases();
                 for (Disease disease : listdis) {
                     Element diss = doc.createElement("diseases");
                     booklist.appendChild(diss);
@@ -132,68 +123,41 @@ public class NewMainWindow {
         JButton uploadButton = new JButton(new ImageIcon("/Users/natalagrunskaa/Downloads/doctor.png"));
         uploadButton.setToolTipText("хз не помню о чем я думала кода я создавала эту кнопку");
 
-        uploadButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                Document doc = null;
-                try {
-                    DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                    doc = dBuilder.parse(new File("save1.xml"));
-                    doc.getDocumentElement().normalize();
-                } catch (ParserConfigurationException | SAXException | IOException e) {
-                    e.printStackTrace();
-                }
-                if(!em.getTransaction().isActive()) em.getTransaction().begin();
-                assert doc != null;
-                NodeList dlBooks = doc.getElementsByTagName("doctors");
-                for (int temp = 0; temp < dlBooks.getLength(); temp++) { // Выбор очередного элемента списка
-                    Node elem = dlBooks.item(temp);
-                    Doctor doctor = new Doctor();
-                    NamedNodeMap attrs = elem.getAttributes();
-                    doctor.setName(attrs.getNamedItem("Name").getNodeValue());
-                    doctor.setLastName(attrs.getNamedItem("Last_Name").getNodeValue());
-                    doctor.setAge(Integer.parseInt(attrs.getNamedItem("Age").getNodeValue()));
-                    doctor.setPhoneNumber(attrs.getNamedItem("Phone").getNodeValue());
-                    doctor.setSpecialization(attrs.getNamedItem("Spec").getNodeValue());
-                    doctor.setWork_days(attrs.getNamedItem("WorkDays").getNodeValue());
-                    doctor.setWork_time(attrs.getNamedItem("WorkTime").getNodeValue());
-                    doctor.setCabinet(Integer.parseInt(attrs.getNamedItem("Cabinet").getNodeValue()));
-                    em.persist(doctor);
-                }
+        uploadButton.addActionListener(event -> {
+            Document doc = null;
+            try {
+                DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                doc = dBuilder.parse(new File("save1.xml"));
+                doc.getDocumentElement().normalize();
+            } catch (ParserConfigurationException | SAXException | IOException e) {
+                e.printStackTrace();
+            }
+            assert doc != null;
+            NodeList dlBooks = doc.getElementsByTagName("doctors");
+            for (int temp = 0; temp < dlBooks.getLength(); temp++) { // Выбор очередного элемента списка
+                Node elem = dlBooks.item(temp);
+                NamedNodeMap attrs = elem.getAttributes();
+                service.addDoctor(attrs.getNamedItem("Name").getNodeValue(), attrs.getNamedItem("Last_Name").getNodeValue(), Integer.parseInt(attrs.getNamedItem("Age").getNodeValue()), attrs.getNamedItem("Phone").getNodeValue(), attrs.getNamedItem("Spec").getNodeValue(), Integer.parseInt(attrs.getNamedItem("Cabinet").getNodeValue())
+                        , attrs.getNamedItem("WorkDays").getNodeValue(), attrs.getNamedItem("WorkTime").getNodeValue());
 
-                NodeList plBooks = doc.getElementsByTagName("patients");
-                for (int temp = 0; temp < plBooks.getLength(); temp++) { // Выбор очередного элемента списка
-                    Node elem = plBooks.item(temp);
-                    NamedNodeMap attrs = elem.getAttributes();
-                    Patient patient = new Patient();
-                    patient.setName(attrs.getNamedItem("Name").getNodeValue());
-                    patient.setLastName(attrs.getNamedItem("Last_Name").getNodeValue());
-                    patient.setAge(Integer.parseInt(attrs.getNamedItem("Age").getNodeValue()));
-                    patient.setPhoneNumber(attrs.getNamedItem("Phone").getNodeValue());
-                    patient.setBloodType(Integer.parseInt(attrs.getNamedItem("BloodType").getNodeValue()));
-                    em.persist(patient);
-
-                }
-                NodeList diseases = doc.getElementsByTagName("diseases");
-                for (int temp = 0; temp < diseases.getLength(); temp++) { // Выбор очередного элемента списка
-                    Node elem = diseases.item(temp);
-                    NamedNodeMap attrs = elem.getAttributes();
-                    Disease disease = new Disease();
-                    disease.setName(attrs.getNamedItem("Name").getNodeValue());
-                    em.persist(disease);
-
-                }
-
-                em.getTransaction().commit();
-                updateTables();
-
-//                log.info("Данные успешно загружены");
             }
 
+            NodeList plBooks = doc.getElementsByTagName("patients");
+            for (int temp = 0; temp < plBooks.getLength(); temp++) { // Выбор очередного элемента списка
+                Node elem = plBooks.item(temp);
+                NamedNodeMap attrs = elem.getAttributes();
+                service.addPatient(attrs.getNamedItem("Name").getNodeValue(), attrs.getNamedItem("Last_Name").getNodeValue(), Integer.parseInt(attrs.getNamedItem("Age").getNodeValue()), attrs.getNamedItem("Phone").getNodeValue(),Integer.parseInt(attrs.getNamedItem("BloodType").getNodeValue()));
+
+            }
+            NodeList diseases = doc.getElementsByTagName("diseases");
+            for (int temp = 0; temp < diseases.getLength(); temp++) { // Выбор очередного элемента списка
+                Node elem = diseases.item(temp);
+                NamedNodeMap attrs = elem.getAttributes();
+                service.addDisease(attrs.getNamedItem("Name").getNodeValue());
+            }
+            updateTables();
         });
-
-
         toolBarButtons.add(uploadButton);
-
         for (JButton b : toolBarButtons) {
             toolBar.addSeparator();
             toolBar.add(b);
@@ -218,41 +182,37 @@ public class NewMainWindow {
         ListSelectionModel selModel = mainTable.getSelectionModel();
         CardBox cardBox = new CardBox(columns, this);
 
-        selModel.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                cardBox.data = null;
-                cardBox.updateCard();
-                int[] selectedRows = mainTable.getSelectedRows();
-                int selIndex = selectedRows[0];
-                TableModel model = mainTable.getModel();
-                Object value = model.getValueAt(selIndex, 0);
-                if(!em.getTransaction().isActive()) em.getTransaction().begin();
-                Doctor doctor = em.find(Doctor.class, Integer.parseInt(value.toString()));
-                String[] dataSelect;
-                if (doctor == null) {
-                    Patient patient = em.find(Patient.class, Integer.parseInt(value.toString()));
-                    dataSelect = new String[5];
-                    dataSelect[0] = String.valueOf(patient.getId());
-                    dataSelect[1] = patient.getName() + " " + patient.getLastName();
-                    dataSelect[2] = String.valueOf(patient.getAge());
-                    dataSelect[3] = patient.getPhoneNumber();
-                    dataSelect[4] = String.valueOf(patient.getBloodType());
-                } else {
-                    dataSelect = new String[8];
-                    dataSelect[0] = String.valueOf(doctor.getId());
-                    dataSelect[1] = doctor.getName() + " " + doctor.getLastName();
-                    dataSelect[2] = doctor.getSpecialization();
-                    dataSelect[3] = String.valueOf(doctor.getAge());
-                    dataSelect[4] = doctor.getPhoneNumber();
-                    dataSelect[5] = doctor.getWork_days();
-                    dataSelect[6] = doctor.getWork_time();
-                    dataSelect[7] = String.valueOf(doctor.getCabinet());
-                }
-                em.getTransaction().commit();
-                cardBox.data = dataSelect;
-                cardBox.updateCard();
+        selModel.addListSelectionListener(e -> {
+            cardBox.data = null;
+            cardBox.updateCard();
+            int[] selectedRows = mainTable.getSelectedRows();
+            int selIndex = selectedRows[0];
+            TableModel model1 = mainTable.getModel();
+            Object value = model1.getValueAt(selIndex, 0);
 
+            Doctor doctor = service.getDoctor(Integer.parseInt(value.toString()));
+            String[] dataSelect;
+            if (doctor == null) {
+                Patient patient = service.getPatient(Integer.parseInt(value.toString()));
+                dataSelect = new String[5];
+                dataSelect[0] = String.valueOf(patient.getId());
+                dataSelect[1] = patient.getName() + " " + patient.getLastName();
+                dataSelect[2] = String.valueOf(patient.getAge());
+                dataSelect[3] = patient.getPhoneNumber();
+                dataSelect[4] = String.valueOf(patient.getBloodType());
+            } else {
+                dataSelect = new String[8];
+                dataSelect[0] = String.valueOf(doctor.getId());
+                dataSelect[1] = doctor.getName() + " " + doctor.getLastName();
+                dataSelect[2] = doctor.getSpecialization();
+                dataSelect[3] = String.valueOf(doctor.getAge());
+                dataSelect[4] = doctor.getPhoneNumber();
+                dataSelect[5] = doctor.getWork_days();
+                dataSelect[6] = doctor.getWork_time();
+                dataSelect[7] = String.valueOf(doctor.getCabinet());
             }
+            cardBox.data = dataSelect;
+            cardBox.updateCard();
 
         });
 
@@ -268,9 +228,7 @@ public class NewMainWindow {
     public void updateTables() {
         ArrayList<String[]> dataDoctors = new ArrayList<>();
         ArrayList<String[]> dataPatients = new ArrayList<>();
-        if(!em.getTransaction().isActive()) em.getTransaction().begin();
-        Query queryd = em.createNativeQuery("SELECT * FROM Person where bd_type ='D' ORDER BY Specialization", Doctor.class);
-        List<Doctor> listd = queryd.getResultList();
+        List<Doctor> listd = service.getAllDoctors();
         for (Doctor doctor : listd) {
             String[] oneD = new String[4];
             oneD[0] = String.valueOf(doctor.getId());
@@ -279,9 +237,7 @@ public class NewMainWindow {
             oneD[3] = doctor.getSpecialization();
             dataDoctors.add(oneD);
         }
-
-        Query queryp = em.createNativeQuery("SELECT * FROM Person where bd_type ='P' order by Name", Patient.class);
-        List<Patient> listp = queryp.getResultList();
+        List<Patient> listp = service.getAllPatients();
         for (Patient patient : listp) {
             String[] oneP = new String[3];
             oneP[0] = String.valueOf(patient.getId());
@@ -289,7 +245,6 @@ public class NewMainWindow {
             oneP[2] = patient.getLastName();
             dataPatients.add(oneP);
         }
-        em.getTransaction().commit();
         tabsFolder.removeAll();
         MainWindow.add(tabsFolder, BorderLayout.CENTER);
         tabsFolder.addTab("Doctors", new ImageIcon("/Users/natalagrunskaa/Downloads/doctor.png"), tabInit(ArrLsttoStr(dataDoctors)), "Открыть таблицу докторов");
@@ -317,6 +272,7 @@ public class NewMainWindow {
 
     public static void main(String[] args) {
         NewMainWindow n = new NewMainWindow();
+        service.startConnection();
         n.show();
     }
 }

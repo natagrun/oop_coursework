@@ -1,12 +1,11 @@
 package org.example;
-import javax.persistence.Query;
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.example.NewMainWindow.em;
+import static org.example.NewMainWindow.service;
 
 public class CardBox extends JPanel {
     String[] data;
@@ -16,13 +15,11 @@ public class CardBox extends JPanel {
     private Patient patient;
 
     private void deleteOrNah(int id) {
-        if (!em.getTransaction().isActive()) em.getTransaction().begin();
-        Person person = em.find(Person.class, id);
+        Person person = service.getPerson(id);
         JFrame youReallyWantIt = new JFrame("Commit delete");
         youReallyWantIt.setSize(300, 100);
         youReallyWantIt.setLocation(500, 250);
         youReallyWantIt.setLayout(new BorderLayout());
-
         String text = "Do you really want to delete " + person.getName() + " " + person.getLastName();
         JLabel question = new JLabel();
         question.setText(text);
@@ -38,32 +35,12 @@ public class CardBox extends JPanel {
 
         yes.addActionListener(event -> {
             youReallyWantIt.setVisible(false);
-            deleteCard();
+            service.removePerson(id);
             newMainWindows.updateTables();
         });
 
         no.addActionListener(event -> youReallyWantIt.setVisible(false));
         youReallyWantIt.setVisible(true);
-    }
-
-    private void deleteCard() {
-        if (!em.getTransaction().isActive()) em.getTransaction().begin();
-        Person person = em.find(Person.class, Integer.parseInt(data[0]));
-        Query queryd = em.createNativeQuery("DELETE FROM doctor_to_patient where doctor_id =?1");
-        queryd.setParameter(1, person.id);
-        queryd.executeUpdate();
-        queryd = em.createNativeQuery("DELETE FROM doctor_to_patient where patient_id =?1");
-        queryd.setParameter(1, person.id);
-        queryd.executeUpdate();
-        queryd = em.createNativeQuery("DELETE FROM patient_to_disease where patient_id =?1");
-        queryd.setParameter(1, person.id);
-        queryd.executeUpdate();
-        queryd = em.createNativeQuery("DELETE FROM Person where id =?1");
-        queryd.setParameter(1, person.id);
-        queryd.executeUpdate();
-        em.getTransaction().commit();
-
-
     }
 
     public CardBox(String[] columns, NewMainWindow newMainWindow) {
@@ -133,9 +110,9 @@ public class CardBox extends JPanel {
         connectionButton.addActionListener(event -> {
 
             try {
-                if (!em.getTransaction().isActive()) em.getTransaction().begin();
-                Doctor doctor = em.find(Doctor.class, Integer.parseInt(data[0]));
-                Patient patient = em.find(Patient.class, Integer.parseInt(data[0]));
+                Doctor doctor = service.getDoctor(Integer.parseInt(data[0]));
+
+                Patient patient = service.getPatient(Integer.parseInt(data[0]));
                 if (patient == null) {
                     DocConnectionWindow docConnectionWindow = new DocConnectionWindow(newMainWindow, doctor);
                     docConnectionWindow.setWin();
@@ -145,16 +122,12 @@ public class CardBox extends JPanel {
                     patientConnectionWindow.setWin();
                     patientConnectionWindow.SetVisible(true);
                 }
-
-                em.getTransaction().commit();
             } catch (NullPointerException n) {
                 System.out.println();
             }
         });
 
         if (columns.length == 6) {
-            if (!em.getTransaction().isActive()) em.getTransaction().begin();
-
             JButton certificateButton = new JButton("Make certificate");
             buttonPanel.add(certificateButton);
 
@@ -162,7 +135,7 @@ public class CardBox extends JPanel {
 
                 try {
                     System.out.println(Arrays.toString(data));
-                    patient = em.find(Patient.class, Integer.parseInt(data[0]));
+                    patient = service.getPatient(Integer.parseInt(data[0]));
                     System.out.println(patient);
                     CertificateWindow c = new CertificateWindow(patient);
                     c.setCertifWin();

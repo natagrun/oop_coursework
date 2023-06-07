@@ -1,18 +1,18 @@
 package org.example;
 
 import com.itextpdf.text.DocumentException;
+
 import javax.persistence.Query;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.List;
 
-import static org.example.NewMainWindow.em;
+import static org.example.NewMainWindow.service;
 
 public class CertificateWindow {
     private final JFrame certifWin = new JFrame("Make certificate");
@@ -39,25 +39,20 @@ public class CertificateWindow {
     private String[] fillItems(int code) {
         String[] l1 = new String[1];
         if (code == 1) {
-            if (!em.getTransaction().isActive()) em.getTransaction().begin();
-            Query queryd = em.createNativeQuery("SELECT * FROM Person where bd_type ='D'", Doctor.class);
-            List<Doctor> list = queryd.getResultList();
+            List<Doctor> list = service.getAllDoctors();
             String[] l = new String[list.size()];
             for (int i = 0; i < list.size(); i++) {
-
-                l[i] = list.get(i).getName() + " " + list.get(i).getLastName();}
+                l[i] = list.get(i).getName() + " " + list.get(i).getLastName();
+            }
 
             return l;
         }
 
         if (code == 3) {
-            if(!em.getTransaction().isActive()) em.getTransaction().begin();
-            Query queryd = em.createNativeQuery("SELECT * FROM Disease", Disease.class);
-            List<Disease> list = queryd.getResultList();
+            List<Disease> list = service.getAllDiseases();
             String[] l = new String[list.size()];
             for (int i = 0; i < list.size(); i++) {
-                    l[i] = list.get(i).getName();
-
+                l[i] = list.get(i).getName();
             }
             return l;
         }
@@ -88,9 +83,7 @@ public class CertificateWindow {
         comboBoxDoctor.addActionListener(actionListener);
 
 
-        JLabel pat = new JLabel(this.patient.getName()+" "+ this.patient.getLastName());
-
-
+        JLabel pat = new JLabel(this.patient.getName() + " " + this.patient.getLastName());
 
 
         // Определение маски и содание поля ввода мобильного телефона

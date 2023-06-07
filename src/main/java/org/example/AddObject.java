@@ -6,7 +6,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static org.example.NewMainWindow.em;
+import static org.example.NewMainWindow.service;
 
 public class AddObject {
     private String Name, LastName, Age, PhoneNum, Spec, Cabinet, Work_days, Work_time, BloodType;
@@ -115,21 +115,15 @@ public class AddObject {
                 for (JTextField b : notCheckField) {
                     checkNULL(b);
                 }
-                if (!em.getTransaction().isActive()) em.getTransaction().begin();
                 if (strFields.length == 5) {
-                    Doctor doctor = new Doctor(doctorStringFields[0], doctorStringFields[1], Integer.parseInt(doctorNumberFields[1]), doctorNumberFields[0], doctorStringFields[2], Integer.parseInt(doctorNumberFields[2]), doctorStringFields[3], doctorStringFields[4]);
-                    em.persist(doctor);
+                    service.addDoctor(doctorStringFields[0], doctorStringFields[1], Integer.parseInt(doctorNumberFields[1]), doctorNumberFields[0], doctorStringFields[2], Integer.parseInt(doctorNumberFields[2]), doctorStringFields[3], doctorStringFields[4]);
                 }
                 if (strFields.length == 2) {
-                    Patient patient = new Patient(patientStringFields[0], patientStringFields[1], Integer.parseInt(patientNumberFields[1]), patientNumberFields[0], Integer.parseInt(patientNumberFields[2]));
-                    em.persist(patient);
+                    service.addPatient(patientStringFields[0], patientStringFields[1], Integer.parseInt(patientNumberFields[1]), patientNumberFields[0], Integer.parseInt(patientNumberFields[2]));
                 }
                 if (strFields.length == 1) {
-                    Disease disease = new Disease(diseaseFields[0]);
-                    disease.setCount(0);
-                    em.persist(disease);
+                    service.addDisease(diseaseFields[0]);
                 }
-                em.getTransaction().commit();
                 for (String n : numberFields) {
                     n = null;
                 }

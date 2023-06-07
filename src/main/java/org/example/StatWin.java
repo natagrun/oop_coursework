@@ -1,12 +1,11 @@
 package org.example;
-import javax.persistence.Query;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.NewMainWindow.em;
+import static org.example.NewMainWindow.service;
 
 public class StatWin {
     private final JFrame statWin = new JFrame("Statistics");
@@ -16,9 +15,7 @@ public class StatWin {
         statWin.setLocation(400, 150);
         statWin.setLayout(new BorderLayout());
         ArrayList<String[]> dataDisease = new ArrayList<>();
-        if(!em.getTransaction().isActive()) em.getTransaction().begin();
-        Query queryd = em.createNativeQuery("SELECT * FROM Disease ORDER BY count DESC", Disease.class);
-        List<Disease> listd = queryd.getResultList();
+        List<Disease> listd = service.getAllDiseases();
         for (Disease disease : listd) {
             String[] oneD = new String[3];
             oneD[0] = String.valueOf(disease.getId());
@@ -26,7 +23,6 @@ public class StatWin {
             oneD[2] = String.valueOf(disease.getCount());
             dataDisease.add(oneD);
         }
-        em.getTransaction().commit();
         String[][] ans = new String[dataDisease.size()][dataDisease.get(0).length];
         for (int i = 0; i < ans.length; i++) {
             ans[i] = dataDisease.get(i);

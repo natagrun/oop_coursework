@@ -1,12 +1,10 @@
 package org.example;
-import javax.persistence.Query;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import static org.example.NewMainWindow.em;
-
+import static org.example.NewMainWindow.service;
 public class ConnewctionButSEcond {
     private final JFrame connectWindow = new JFrame("Making connection");
     private final PatientConnectionWindow patientConnectionWindow;
@@ -32,10 +30,7 @@ public class ConnewctionButSEcond {
         JPanel docToPat = new JPanel();
         docToPat.setLayout(new GridLayout(3, 2, 1, 1));
         JComboBox comboBoxNotSetted;
-
-        if(!em.getTransaction().isActive()) em.getTransaction().begin();
-        Query queryd = em.createNativeQuery("SELECT * FROM Disease", Disease.class);
-        List<Disease> list = queryd.getResultList();
+        List<Disease> list = service.getAllDiseases();
         String[] l = new String[list.size()];
         ArrayList<Integer> kostya = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
@@ -47,7 +42,7 @@ public class ConnewctionButSEcond {
         docToPat.add(patName);
         docToPat.add(comboBoxNotSetted);
         String f = comboBoxNotSetted.getSelectedItem().toString();
-        disease = em.find(Disease.class, kostya.get(Arrays.asList(l).indexOf(f)));
+        disease = service.getDisease(kostya.get(Arrays.asList(l).indexOf(f)));
         JButton exitButton = new JButton("Exit");
         JButton confirmButton = new JButton("Confirm");
         JButton deleteButton = new JButton("Delete connection");
@@ -59,31 +54,15 @@ public class ConnewctionButSEcond {
         });
         confirmButton.addActionListener(event -> {
             String u = comboBoxNotSetted.getSelectedItem().toString();
-            if(!em.getTransaction().isActive()) em.getTransaction().begin();
-            disease = em.find(Disease.class, kostya.get(Arrays.asList(l).indexOf(u)));
-            Query query = em.createNativeQuery("SELECT * FROM patient_to_disease where disease_id =?1 and patient_id =?2");
-            query.setParameter(1, disease.getId());
-            query.setParameter(2, patient.id);
-            List liss = query.getResultList();
-            if (liss.size() == 0) {
-                patient.add_disease(disease);
-                em.merge(patient);
-
-            }
-            em.getTransaction().commit();
+            disease = service.getDisease(kostya.get(Arrays.asList(l).indexOf(u)));
+            if (service.getPatientDiseaseConnections(disease.getId(), patient.id)) service.addDiseaseToPatient(patient,disease);
             patientConnectionWindow.fillPatients();
         });
         deleteButton.addActionListener(event -> {
             String u = comboBoxNotSetted.getSelectedItem().toString();
-            if(!em.getTransaction().isActive()) em.getTransaction().begin();
-            disease = em.find(Disease.class, kostya.get(Arrays.asList(l).indexOf(u)));
-            Query queryd2 = em.createNativeQuery("DELETE FROM patient_to_disease where disease_id =?1 and patient_id =?2");
-            queryd2.setParameter(1, disease.getId());
-            queryd2.setParameter(2, patient.id);
-            queryd2.executeUpdate();
+            disease = service.getDisease(kostya.get(Arrays.asList(l).indexOf(u)));
+            service.deleteDiseaseFromPatient(disease.getId(), patient.id);
             disease.setCount(disease.getCount()-1);
-
-            em.getTransaction().commit();
             patientConnectionWindow.fillPatients();
         });
         docToPat.add(exitButton);
